@@ -1,0 +1,36 @@
+--prefix=/usr \
+--with-pkgversion='Clear Linux OS for Intel Architecture'\
+--libdir=/usr/lib64 \
+--enable-libstdcxx-pch\
+--libexecdir=/usr/lib64 \
+--with-system-zlib\
+--enable-shared\
+--enable-gnu-indirect-function \
+--disable-vtable-verify \
+--enable-threads=posix\
+--enable-__cxa_atexit\
+--enable-plugin\
+--enable-ld=default\
+--enable-clocale=gnu\
+--disable-multiarch\
+--enable-multilib\
+--enable-lto\
+--disable-werror \
+--enable-linker-build-id \
+--build=%{gcc_target}\
+--target=%{gcc_target}\
+--enable-languages="c,c++,fortran,go" \
+--enable-bootstrap \
+--with-ppl=yes \
+--with-isl \
+--includedir=/usr/include \
+--exec-prefix=/usr \
+--with-glibc-version=2.19 \
+--disable-libunwind-exceptions \
+--with-gnu-ld \
+--with-tune=haswell \
+--with-arch=westmere \
+--enable-cet \
+--disable-libmpx \
+--with-gcc-major-version-only \
+--enable-default-pie

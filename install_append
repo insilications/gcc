@@ -1,0 +1,18 @@
+cd %{buildroot}/usr/bin
+ln -sf x86_64-generic-linux-g++ g++
+ln -sf x86_64-generic-linux-gcc gcc
+install -d %{buildroot}/usr/lib
+ln -sf /usr/bin/cpp %{buildroot}/usr/lib/cpp
+ln -sf g++ c++
+ln -sf gcc cc
+cd -
+
+# This is only for gdb
+mkdir -p %{buildroot}/usr/share/gdb/auto-load/usr/lib64
+mv %{buildroot}/usr/lib64/libstdc++.so.*-gdb.py %{buildroot}/usr/share/gdb/auto-load/usr/lib64/.
+
+# Also clang compat
+(cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-generic-linux/*/*.[ao])
+
+mkdir -p %{buildroot}/usr/lib64/haswell
+cp -d %{buildroot}/usr/lib64/*so* %{buildroot}/usr/lib64/haswell/

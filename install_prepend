@@ -1,0 +1,2 @@
+export CPATH=/usr/include
+export LIBRARY_PATH=/usr/lib64

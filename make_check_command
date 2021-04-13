@@ -1,0 +1,2 @@
+export CHECK_TEST_FRAMEWORK=1
+make -k  %{?_smp_mflags} check  || :
