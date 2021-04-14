@@ -12,6 +12,15 @@ elfutils-dev
 expect
 flex
 gcc-dev
+gcc-dev32
+gcc-doc
+gcc-go
+gcc-go-lib
+gcc-libgcc32
+gcc-libs-math
+gcc-libstdc++32
+gcc-libubsan
+gcc-locale
 gdb-dev
 git
 glibc-dev
@@ -24,6 +33,7 @@ libedit
 libedit-dev
 libffi-dev
 libffi-staticdev
+libgcc1
 libstdc++
 libstdc++-dev
 libunwind

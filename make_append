@@ -1,0 +1,22 @@
+for dir in x86_64-generic-linux; do
+    for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
+        pushd $dir/$lib
+        # Save any shared libraries
+        mv .libs saved.libs || :
+        rename lib savedlib lib*.so.* || :
+
+        make clean
+        make -j16 CPPFLAGS="-D_GLIBCXX_GTHREAD_USE_WEAK=0" \
+             LIBGCC2_DEBUG_CFLAGS="-g -DGTHREAD_USE_WEAK=0"
+
+        # Restore the saved shared libraries (if any)
+        rename savedlib lib savedlib* || :
+        if [ -d saved.libs ]; then
+            mv saved.libs/*.so.* .libs || :
+        fi
+
+        # Update timestamps so make install won't recreate
+        find -name '*.so*' | xargs -rt touch -r `find -name '*.a' | head -1`
+        popd
+    done
+done
