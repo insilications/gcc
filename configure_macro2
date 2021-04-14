@@ -24,11 +24,11 @@
 --includedir=%{_includedir} \
 --exec-prefix=%{_prefix} \
 --with-glibc-version=2.19 \
---with-system-libunwind \
+--disable-libunwind-exceptions \
 --with-gnu-ld \
 --with-tune=native \
 --with-arch=native \
---disable-bootstrap \
+--enable-bootstrap \
 --disable-cet \
 --disable-libmpx \
 --with-gcc-major-version-only \
@@ -37,4 +37,5 @@
 --includedir=/usr/include \
 --exec-prefix=/usr \
 --with-system-zlib \
---with-gmp
+--with-gmp \
+--with-build-config=bootstrap-lto

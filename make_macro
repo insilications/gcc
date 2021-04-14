@@ -1,1 +1,23 @@
-make -j12 V=1 VERBOSE=1 BOOT_CFLAGS="-O3 --param=lto-max-streaming-parallelism=4 -march=native -mtune=native -fomit-frame-pointer -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_CXXFLAGS="-O3 --param=lto-max-streaming-parallelism=4 -march=native -mtune=native -fomit-frame-pointer -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_FFLAGS="-O3 --param=lto-max-streaming-parallelism=4 -march=native -mtune=native -fomit-frame-pointer -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_LDFLAGS="-O3 --param=lto-max-streaming-parallelism=4 -march=native -mtune=native -fomit-frame-pointer -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" profiledbootstrap
+make -j16
+for dir in x86_64-generic-linux; do
+    for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
+        pushd $dir/$lib
+        # Save any shared libraries
+        mv .libs saved.libs || :
+        rename lib savedlib lib*.so.* || :
+
+        make clean
+        make -j16 CPPFLAGS="-D_GLIBCXX_GTHREAD_USE_WEAK=0" \
+             LIBGCC2_DEBUG_CFLAGS="-g -DGTHREAD_USE_WEAK=0"
+
+        # Restore the saved shared libraries (if any)
+        rename savedlib lib savedlib* || :
+        if [ -d saved.libs ]; then
+            mv saved.libs/*.so.* .libs || :
+        fi
+
+        # Update timestamps so make install won't recreate
+        find -name '*.so*' | xargs -rt touch -r `find -name '*.a' | head -1`
+        popd
+    done
+done
