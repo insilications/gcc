@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 11.0
-Release  : 1160
+Release  : 1301
 URL      : file:///insilications/apps/gcc-11.0.tar.gz
 Source0  : file:///insilications/apps/gcc-11.0.tar.gz
 Summary  : zlib compression library
@@ -186,7 +186,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1618440837
+export SOURCE_DATE_EPOCH=1618442267
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -305,7 +305,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1618440837
+export SOURCE_DATE_EPOCH=1618442267
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
