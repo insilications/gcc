@@ -8,11 +8,33 @@ ln -sf gcc cc
 cd -
 
 # This is only for gdb
-mkdir -p %{buildroot}/usr/share/gdb/auto-load/usr/lib64
-mv %{buildroot}/usr/lib64/libstdc++.so.*-gdb.py %{buildroot}/usr/share/gdb/auto-load/usr/lib64/.
+mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
+mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
+mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib64/.
+mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
+
+# merge the two C++ include trees (needed for Clang)
+pushd %{buildroot}/usr/include/c++/*/x86_64-generic-linux
+find -type f \! -path ./32/\* | while read f; do
+    cmp -s $f 32/$f && continue
+    (
+        echo '#ifdef __LP64__'
+        cat $f
+        echo '#else'
+        cat 32/$f
+        echo '#endif'
+    ) > rpm-tmp-hdr
+    mv rpm-tmp-hdr $f
+done
+for f in ./32/*; do
+  rm -rf $f
+  ln -s ../$(basename $f) $f
+done
+popd
 
 # Also clang compat
 (cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-generic-linux/*/*.[ao])
+(cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-generic-linux/*/32/*.[ao])
 
 mkdir -p %{buildroot}/usr/lib64/haswell
 cp -d %{buildroot}/usr/lib64/*so* %{buildroot}/usr/lib64/haswell/

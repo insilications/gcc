@@ -1,4 +1,4 @@
-for dir in x86_64-generic-linux; do
+for dir in x86_64-generic-linux/{,32}; do
     for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
         pushd $dir/$lib
         # Save any shared libraries

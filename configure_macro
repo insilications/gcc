@@ -13,7 +13,7 @@
 --enable-ld=default \
 --enable-clocale=gnu \
 --disable-multiarch \
---disable-multilib \
+--enable-multilib \
 --enable-lto \
 --enable-linker-build-id \
 --build=x86_64-generic-linux \
@@ -24,7 +24,7 @@
 --includedir=%{_includedir} \
 --exec-prefix=%{_prefix} \
 --with-glibc-version=2.19 \
---with-system-libunwind \
+--disable-libunwind-exceptions \
 --with-gnu-ld \
 --with-tune=native \
 --with-arch=native \
@@ -37,4 +37,5 @@
 --includedir=/usr/include \
 --exec-prefix=/usr \
 --with-system-zlib \
+--disable-default-ssp \
 --with-gmp
