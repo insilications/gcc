@@ -10,25 +10,26 @@
 --enable-threads=posix \
 --enable-__cxa_atexit \
 --enable-plugin \
+--enable-plugins \
 --enable-ld=default \
 --enable-clocale=gnu \
 --disable-multiarch \
 --enable-multilib \
 --enable-lto \
 --enable-linker-build-id \
+--host=x86_64-generic-linux \
 --build=x86_64-generic-linux \
 --target=x86_64-generic-linux \
---enable-languages="c,c++" \
+--enable-languages="c,c++,lto" \
 --with-ppl=yes \
 --with-isl \
 --includedir=%{_includedir} \
 --exec-prefix=%{_prefix} \
 --with-glibc-version=2.19 \
---disable-libunwind-exceptions \
 --with-gnu-ld \
 --with-tune=native \
 --with-arch=native \
---disable-bootstrap \
+--enable-bootstrap \
 --disable-cet \
 --disable-libmpx \
 --with-gcc-major-version-only \
@@ -38,4 +39,6 @@
 --exec-prefix=/usr \
 --with-system-zlib \
 --disable-default-ssp \
---with-gmp
+--with-gmp \
+--enable-cxx-flags='-O3 -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
+--with-build-config=bootstrap-lto
