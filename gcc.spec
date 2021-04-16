@@ -41,8 +41,19 @@ BuildRequires : gcc-locale
 BuildRequires : gdb-dev
 BuildRequires : gettext
 BuildRequires : git
+BuildRequires : glibc-abi
+BuildRequires : glibc-bench
+BuildRequires : glibc-bin
 BuildRequires : glibc-dev
+BuildRequires : glibc-dev32
+BuildRequires : glibc-doc
+BuildRequires : glibc-extras
+BuildRequires : glibc-lib-avx2
+BuildRequires : glibc-libc32
+BuildRequires : glibc-locale
+BuildRequires : glibc-nscd
 BuildRequires : glibc-staticdev
+BuildRequires : glibc-utils
 BuildRequires : gmp-dev
 BuildRequires : gmp-staticdev
 BuildRequires : graphviz
@@ -108,7 +119,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1618571127
+export SOURCE_DATE_EPOCH=1618571593
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -228,7 +239,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1618571127
+export SOURCE_DATE_EPOCH=1618571593
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
