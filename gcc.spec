@@ -13,11 +13,11 @@ Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-2.0-with-GCC-exception GPL-3.0 GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+ LGPL-2.1 bzip2-1.0.6
 Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
-Requires: gcc-info = %{version}-%{release}
 Requires: gcc-lib = %{version}-%{release}
 Requires: gcc-libgcc32 = %{version}-%{release}
 Requires: gcc-libs-math = %{version}-%{release}
 Requires: gcc-libstdc++32 = %{version}-%{release}
+Requires: gcc-libubsan = %{version}-%{release}
 Requires: gcc-locales = %{version}-%{release}
 Requires: libgcc1 = %{version}-%{release}
 Requires: libstdc++ = %{version}-%{release}
@@ -158,18 +158,9 @@ dev32 components for the gcc package.
 %package doc
 Summary: doc components for the gcc package.
 Group: Documentation
-Requires: gcc-info = %{version}-%{release}
 
 %description doc
 doc components for the gcc package.
-
-
-%package info
-Summary: info components for the gcc package.
-Group: Default
-
-%description info
-info components for the gcc package.
 
 
 %package lib
@@ -212,6 +203,14 @@ Group: Default
 
 %description libstdc++32
 libstdc++32 components for the gcc package.
+
+
+%package libubsan
+Summary: libubsan components for the gcc package.
+Group: Default
+
+%description libubsan
+libubsan components for the gcc package.
 
 
 %package locales
@@ -270,7 +269,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619183918
+export SOURCE_DATE_EPOCH=1619185470
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -393,7 +392,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1619183918
+export SOURCE_DATE_EPOCH=1619185470
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
@@ -470,9 +469,6 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/crtprec32.o
 /usr/lib64/crtprec64.o
 /usr/lib64/crtprec80.o
-/usr/lib64/libasan_preinit.o
-/usr/lib64/liblsan_preinit.o
-/usr/lib64/libtsan_preinit.o
 
 %files bin
 %defattr(-,root,root,-)
@@ -1931,7 +1927,6 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/gcc/x86_64-generic-linux/11/plugin/libcp1plugin.so.0.0.0
 /usr/lib64/haswell/libgomp.so
 /usr/lib64/haswell/libquadmath.so
-/usr/lib64/libasan.so
 /usr/lib64/libatomic.so
 /usr/lib64/libcc1.so
 /usr/lib64/libgcc_s.so
@@ -1939,13 +1934,9 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/libgomp.spec
 /usr/lib64/libitm.so
 /usr/lib64/libitm.spec
-/usr/lib64/liblsan.so
 /usr/lib64/libquadmath.so
-/usr/lib64/libsanitizer.spec
 /usr/lib64/libssp.so
 /usr/lib64/libstdc++.so
-/usr/lib64/libtsan.so
-/usr/lib64/libubsan.so
 
 %files dev32
 %defattr(-,root,root,-)
@@ -1961,6 +1952,14 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 
 %files doc
 %defattr(0644,root,root,0755)
+/usr/share/info/cpp.info
+/usr/share/info/cppinternals.info
+/usr/share/info/gcc.info
+/usr/share/info/gccinstall.info
+/usr/share/info/gccint.info
+/usr/share/info/libgomp.info
+/usr/share/info/libitm.info
+/usr/share/info/libquadmath.info
 /usr/share/man/man1/cpp.1
 /usr/share/man/man1/g++.1
 /usr/share/man/man1/gcc.1
@@ -1972,29 +1971,10 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/share/man/man7/gfdl.7
 /usr/share/man/man7/gpl.7
 
-%files info
-%defattr(0644,root,root,0755)
-/usr/share/info/cpp.info
-/usr/share/info/cppinternals.info
-/usr/share/info/gcc.info
-/usr/share/info/gccinstall.info
-/usr/share/info/gccint.info
-/usr/share/info/libgomp.info
-/usr/share/info/libitm.info
-/usr/share/info/libquadmath.info
-
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/libasan.so.6
-/usr/lib64/libasan.so.6.0.0
 /usr/lib64/libcc1.so.0
 /usr/lib64/libcc1.so.0.0.0
-/usr/lib64/liblsan.so.0
-/usr/lib64/liblsan.so.0.0.0
-/usr/lib64/libtsan.so.0
-/usr/lib64/libtsan.so.0.0.0
-/usr/lib64/libubsan.so.1
-/usr/lib64/libubsan.so.1.0.0
 /usr/share/gdb/auto-load/usr/lib64/libstdc++.so.6.0.29-gdb.py
 
 %files lib32
@@ -2041,6 +2021,29 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib32/libstdc++.so.6
 /usr/lib32/libstdc++.so.6.0.29
 
+%files libubsan
+%defattr(-,root,root,-)
+/usr/lib64/libasan.a
+/usr/lib64/libasan.so
+/usr/lib64/libasan.so.6
+/usr/lib64/libasan.so.6.0.0
+/usr/lib64/libasan_preinit.o
+/usr/lib64/liblsan.a
+/usr/lib64/liblsan.so
+/usr/lib64/liblsan.so.0
+/usr/lib64/liblsan.so.0.0.0
+/usr/lib64/liblsan_preinit.o
+/usr/lib64/libsanitizer.spec
+/usr/lib64/libtsan.a
+/usr/lib64/libtsan.so
+/usr/lib64/libtsan.so.0
+/usr/lib64/libtsan.so.0.0.0
+/usr/lib64/libtsan_preinit.o
+/usr/lib64/libubsan.a
+/usr/lib64/libubsan.so
+/usr/lib64/libubsan.so.1
+/usr/lib64/libubsan.so.1.0.0
+
 %files staticdev
 %defattr(-,root,root,-)
 /usr/lib64/gcc/x86_64-generic-linux/11/32/libgcc.a
@@ -2049,22 +2052,18 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/gcc/x86_64-generic-linux/11/libgcc.a
 /usr/lib64/gcc/x86_64-generic-linux/11/libgcc_eh.a
 /usr/lib64/gcc/x86_64-generic-linux/11/libgcov.a
-/usr/lib64/libasan.a
 /usr/lib64/libatomic.a
 /usr/lib64/libgcc.a
 /usr/lib64/libgcc_eh.a
 /usr/lib64/libgcov.a
 /usr/lib64/libgomp.a
 /usr/lib64/libitm.a
-/usr/lib64/liblsan.a
 /usr/lib64/libquadmath.a
 /usr/lib64/libssp.a
 /usr/lib64/libssp_nonshared.a
 /usr/lib64/libstdc++.a
 /usr/lib64/libstdc++fs.a
 /usr/lib64/libsupc++.a
-/usr/lib64/libtsan.a
-/usr/lib64/libubsan.a
 
 %files staticdev32
 %defattr(-,root,root,-)
