@@ -269,7 +269,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619185470
+export SOURCE_DATE_EPOCH=1619185980
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -392,7 +392,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1619185470
+export SOURCE_DATE_EPOCH=1619185980
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
