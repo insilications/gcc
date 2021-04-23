@@ -19,7 +19,6 @@ Requires: gcc-libs-math = %{version}-%{release}
 Requires: gcc-libstdc++32 = %{version}-%{release}
 Requires: gcc-libubsan = %{version}-%{release}
 Requires: gcc-locale = %{version}-%{release}
-Requires: gcc-man = %{version}-%{release}
 Requires: libgcc1 = %{version}-%{release}
 Requires: libstdc++ = %{version}-%{release}
 BuildRequires : Sphinx
@@ -159,7 +158,6 @@ dev32 components for the gcc package.
 %package doc
 Summary: doc components for the gcc package.
 Group: Documentation
-Requires: gcc-man = %{version}-%{release}
 
 %description doc
 doc components for the gcc package.
@@ -223,14 +221,6 @@ Group: Default
 locale components for the gcc package.
 
 
-%package man
-Summary: man components for the gcc package.
-Group: Default
-
-%description man
-man components for the gcc package.
-
-
 %package staticdev
 Summary: staticdev components for the gcc package.
 Group: Default
@@ -279,7 +269,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619193423
+export SOURCE_DATE_EPOCH=1619211252
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -402,7 +392,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1619193423
+export SOURCE_DATE_EPOCH=1619211252
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
@@ -414,9 +404,9 @@ export LIBRARY_PATH=/usr/lib64
 %find_lang libstdc++
 ## install_append content
 cd %{buildroot}/usr/bin
-ln -sf %{gcc_target}-g++ g++
-ln -sf %{gcc_target}-gcc gcc
-#ln -sf %{gcc_target}-cpp cpp
+ln -sf x86_64-generic-linux-g++ g++
+ln -sf x86_64-generic-linux-gcc gcc
+#ln -sf x86_64-generic-linux-cpp cpp
 install -d %{buildroot}/usr/lib
 ln -sf /usr/bin/cpp %{buildroot}/usr/lib/cpp
 ln -sf g++ c++
@@ -2054,9 +2044,6 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/libubsan.so
 /usr/lib64/libubsan.so.1
 /usr/lib64/libubsan.so.1.0.0
-
-%files man
-%defattr(0644,root,root,0755)
 
 %files staticdev
 %defattr(-,root,root,-)

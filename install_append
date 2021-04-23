@@ -1,7 +1,7 @@
 cd %{buildroot}/usr/bin
-ln -sf %{gcc_target}-g++ g++
-ln -sf %{gcc_target}-gcc gcc
-#ln -sf %{gcc_target}-cpp cpp
+ln -sf x86_64-generic-linux-g++ g++
+ln -sf x86_64-generic-linux-gcc gcc
+#ln -sf x86_64-generic-linux-cpp cpp
 install -d %{buildroot}/usr/lib
 ln -sf /usr/bin/cpp %{buildroot}/usr/lib/cpp
 ln -sf g++ c++
