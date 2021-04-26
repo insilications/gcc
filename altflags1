@@ -41,4 +41,4 @@ export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
 #
-export MAKEFLAGS="-j16 --jobserver-auth=3,4"
+export MAKEFLAGS="--jobserver-auth=3,4"
