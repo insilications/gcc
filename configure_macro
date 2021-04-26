@@ -40,5 +40,6 @@
 --with-system-zlib \
 --disable-default-ssp \
 --with-gmp \
---enable-cxx-flags='-fPIC -fno-PIE -O3 -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
+--with-static-standard-libraries \
+--enable-cxx-flags='-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
 --with-build-config=bootstrap-lto
