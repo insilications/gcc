@@ -76,3 +76,17 @@ Z3-dev
 Z3-staticdev
 zlib-dev
 zlib-staticdev
+glibc
+glibc-abi
+glibc-bin
+glibc-dev
+glibc-dev32
+glibc-doc
+glibc-extras
+glibc-lib-avx2
+glibc-libc32
+glibc-locale
+glibc-nscd
+glibc-staticdev
+glibc-utils
+libc6
