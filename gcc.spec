@@ -130,7 +130,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619535125
+export SOURCE_DATE_EPOCH=1619535203
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -278,7 +278,7 @@ popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1619535125
+export SOURCE_DATE_EPOCH=1619535203
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
