@@ -130,7 +130,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619535203
+export SOURCE_DATE_EPOCH=1619535435
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -182,7 +182,6 @@ export NM=/usr/bin/gcc-nm
 %define gccver 11
 %define gccpath gcc-11.1.0
 ## altflags1 end
-pushd ../gcc-build
 if [ ! -d "../gcc-build" ]; then
     mkdir ../gcc-build;
 fi
@@ -274,19 +273,20 @@ done
 ## ccache stats
 ccache -s
 ## ccache stats
-popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1619535203
+export SOURCE_DATE_EPOCH=1619535435
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
 export LIBRARY_PATH=/usr/lib64
 ## install_prepend end
+## install_macro start
 pushd ../gcc-build
 %make_install
 popd
+## install_macro end
 ## install_append content
 cd %{buildroot}/usr/bin
 if [ -e x86_64-generic-linux-g77 ]; then
