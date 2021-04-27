@@ -1,4 +1,12 @@
-for dir in x86_64-generic-linux/{,32}; do
+# Work around libstdc++'s use of weak symbols to libpthread in static
+# mode: libpthread doesn't get pulled in and therefore we get crashes
+# due to the calls being resolved to address 0x0.
+# We rebuild the .a without weak symbols.
+# See:
+#  https://sourceware.org/bugzilla/show_bug.cgi?id=5784
+#  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=78017
+#  (and more)
+for dir in ../gcc-build/x86_64-generic-linux/{,32}; do
     for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
         pushd $dir/$lib
         # Save any shared libraries
@@ -6,7 +14,7 @@ for dir in x86_64-generic-linux/{,32}; do
         rename lib savedlib lib*.so.* || :
 
         make clean
-        make -j16 CPPFLAGS="-D_GLIBCXX_GTHREAD_USE_WEAK=0" \
+        make %{?_smp_mflags} CPPFLAGS="-D_GLIBCXX_GTHREAD_USE_WEAK=0" \
              LIBGCC2_DEBUG_CFLAGS="-g -DGTHREAD_USE_WEAK=0"
 
         # Restore the saved shared libraries (if any)

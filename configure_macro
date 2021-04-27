@@ -1,45 +1,47 @@
-./configure --prefix=%{_prefix} \
---with-pkgversion='Clear Linux OS for Intel Architecture' \
---libdir=/usr/lib64 \
---enable-libstdcxx-pch \
---libexecdir=/usr/lib64 \
---with-system-zlib \
---enable-shared \
---enable-gnu-indirect-function \
---disable-vtable-verify \
---enable-threads=posix \
---enable-__cxa_atexit \
---enable-plugin \
---enable-plugins \
---enable-ld=default \
---enable-clocale=gnu \
---disable-multiarch \
---enable-multilib \
---enable-lto \
---enable-linker-build-id \
---build=x86_64-generic-linux \
---target=x86_64-generic-linux \
---enable-languages="c,c++,fortran,go" \
---with-ppl=yes \
---with-isl \
---includedir=%{_includedir} \
---exec-prefix=%{_prefix} \
---with-glibc-version=2.19 \
---with-gnu-ld \
---with-tune=native \
---with-arch=native \
---enable-bootstrap \
---disable-cet \
---disable-libmpx \
---with-gcc-major-version-only \
---disable-default-pie \
---disable-werror \
---includedir=/usr/include \
---exec-prefix=/usr \
---with-system-zlib \
---disable-libunwind-exceptions \
---disable-default-ssp \
---with-gmp \
---with-static-standard-libraries \
---enable-cxx-flags='-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
---with-build-config=bootstrap-lto
+if [ ! -d "../gcc-build" ]; then
+    mkdir ../gcc-build;
+fi
+pushd ../gcc-build
+../gcc-11.1.0/configure \
+    --prefix=%{_prefix} \
+    --with-pkgversion='Clear Linux OS for Intel Architecture' \
+    --libdir=/usr/lib64 \
+    --enable-libstdcxx-pch \
+    --libexecdir=/usr/lib64 \
+    --with-system-zlib \
+    --enable-shared \
+    --enable-gnu-indirect-function \
+    --disable-vtable-verify \
+    --enable-threads=posix \
+    --enable-__cxa_atexit \
+    --enable-plugin \
+    --enable-ld=default \
+    --enable-clocale=gnu \
+    --disable-multiarch \
+    --enable-multilib \
+    --enable-lto \
+    --enable-linker-build-id \
+    --build=x86_64-generic-linux \
+    --target=x86_64-generic-linux \
+    --enable-languages="c,c++,fortran,go" \
+    --with-ppl=yes \
+    --with-isl \
+    --includedir=%{_includedir} \
+    --exec-prefix=%{_prefix} \
+    --with-glibc-version=2.19 \
+    --with-gnu-ld \
+    --with-tune=native \
+    --with-arch=native \
+    --enable-bootstrap \
+    --disable-cet \
+    --disable-libmpx \
+    --with-gcc-major-version-only \
+    --disable-default-pie \
+    --disable-werror \
+    --with-system-zlib \
+    --disable-libunwind-exceptions \
+    --disable-default-ssp \
+    --with-gmp \
+    --with-static-standard-libraries \
+    --enable-cxx-flags='-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
+    --with-build-config=bootstrap-lto

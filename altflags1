@@ -42,3 +42,6 @@ export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
 #
 #export MAKEFLAGS="-j16 --jobserver-auth=3,4"
+%define gcc_target x86_64-generic-linux
+%define gccver 11
+%define gccpath gcc-11.1.0
