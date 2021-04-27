@@ -1,0 +1,8 @@
+libgcov-dev
+libssp-dev
+libssp-staticdev
+libgomp-dev
+libgomp-staticdev
+libgcc-s-dev
+gcc-plugin-dev
+libstdc++-dev
