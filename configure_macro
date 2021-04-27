@@ -17,10 +17,9 @@
 --enable-multilib \
 --enable-lto \
 --enable-linker-build-id \
---host=x86_64-generic-linux \
 --build=x86_64-generic-linux \
 --target=x86_64-generic-linux \
---enable-languages="c,c++,lto" \
+--enable-languages="c,c++,fortran,go" \
 --with-ppl=yes \
 --with-isl \
 --includedir=%{_includedir} \
@@ -38,6 +37,7 @@
 --includedir=/usr/include \
 --exec-prefix=/usr \
 --with-system-zlib \
+--disable-libunwind-exceptions \
 --disable-default-ssp \
 --with-gmp \
 --with-static-standard-libraries \

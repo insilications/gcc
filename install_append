@@ -1,4 +1,12 @@
 cd %{buildroot}/usr/bin
+if [ -e x86_64-generic-linux-g77 ]; then
+    ln -sf x86_64-generic-linux-g77 g77 || true
+    ln -sf g77 f77 || true
+fi
+if [ -e x86_64-generic-linux-gfortran ]; then
+    ln -sf x86_64-generic-linux-gfortran gfortran || true
+    ln -sf gfortran f95 || true
+fi
 ln -sf x86_64-generic-linux-g++ g++
 ln -sf x86_64-generic-linux-gcc gcc
 #ln -sf x86_64-generic-linux-cpp cpp
@@ -8,6 +16,12 @@ ln -sf g++ c++
 ln -sf gcc cc
 cd -
 
+# This conflicts with golang, stash away
+# We use gccgo to build golang
+mkdir -p %{buildroot}/usr/libexec/gccgo/bin
+mv %{buildroot}/usr/bin/go %{buildroot}/usr/libexec/gccgo/bin
+mv %{buildroot}/usr/bin/gofmt %{buildroot}/usr/libexec/gccgo/bin
+
 # This is only for gdb
 mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
 mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
@@ -15,7 +29,7 @@ mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/aut
 mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
 
 # merge the two C++ include trees (needed for Clang)
-pushd %{buildroot}/usr/include/c++/*/x86_64-generic-linux
+pushd %{buildroot}/usr/include/c++/11/x86_64-generic-linux
 find -type f \! -path ./32/\* | while read f; do
     cmp -s $f 32/$f && continue
     (
@@ -41,3 +55,4 @@ mkdir -p %{buildroot}/usr/lib64/haswell
 cp -d %{buildroot}/usr/lib64/libgfortran.so* %{buildroot}/usr/lib64/haswell/ || :
 cp -d %{buildroot}/usr/lib64/libgomp.so* %{buildroot}/usr/lib64/haswell/ || :
 cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || :
+# cp -d %{buildroot}/usr/lib64/libitm.so* %{buildroot}/usr/lib64/haswell/ || :
