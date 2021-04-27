@@ -120,7 +120,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619471530
+export SOURCE_DATE_EPOCH=1619477251
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -213,8 +213,14 @@ export NM=/usr/bin/gcc-nm
 --with-gmp \
 --enable-cxx-flags='-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000' \
 --with-build-config=bootstrap-lto
-export MAKEFLAGS="-j16 --jobserver-auth=3,4"
-make -j16 V=1 VERBOSE=1 BOOT_CFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_FFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_LDFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_CXXFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" MAKEFLAGS="-j16 --jobserver-auth=3,4" bootstrap
+export CCACHE_DISABLE=true
+export PATH="/usr/lib64/ccache/bin:$PATH"
+export CCACHE_NOHASHDIR=true
+export CCACHE_CPP2=true
+export CCACHE_SLOPPINESS=pch_defines,time_macros,locale,clang_index_store,file_macroexport
+export CCACHE_DIR=/var/tmp/ccache
+export CCACHE_BASEDIR=/builddir/build/BUILD
+make -j16 V=1 VERBOSE=1 BOOT_CFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_FFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_LDFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" BOOT_CXXFLAGS="-O3 -fPIC -fomit-frame-pointer --param=lto-max-streaming-parallelism=8 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-semantic-interposition -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -ffat-lto-objects -malign-data=cacheline -Wl,-sort-common -Wno-error -pipe -Wl,-z,max-page-size=0x1000" bootstrap
 ## make_append content
 for dir in x86_64-generic-linux/{,32}; do
     for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
@@ -245,7 +251,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1619471530
+export SOURCE_DATE_EPOCH=1619477251
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
