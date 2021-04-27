@@ -24,8 +24,12 @@ Provides: cpp
 Provides: cpp-symlinks
 Provides: g++
 Provides: g++-symlinks
+Provides: g77
+Provides: g77-symlinks
 Provides: gcc-symlinks
 Provides: gcov
+Provides: gfortran
+Provides: gfortran-symlinks
 Requires: libgcc1 = %{version}-%{release}
 Requires: libstdc++ = %{version}-%{release}
 BuildRequires : Sphinx
@@ -227,24 +231,6 @@ Group: Default
 locale components for the gcc package.
 
 
-%package staticdev
-Summary: staticdev components for the gcc package.
-Group: Default
-Requires: gcc-dev = %{version}-%{release}
-
-%description staticdev
-staticdev components for the gcc package.
-
-
-%package staticdev32
-Summary: staticdev32 components for the gcc package.
-Group: Default
-Requires: gcc-dev32 = %{version}-%{release}
-
-%description staticdev32
-staticdev32 components for the gcc package.
-
-
 %package -n libgcc1
 Summary: libgcc1 components for the gcc package.
 Group: Default
@@ -278,7 +264,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619538668
+export SOURCE_DATE_EPOCH=1619548369
 unset LD_AS_NEEDED
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
@@ -424,7 +410,7 @@ ccache -s
 
 
 %install
-export SOURCE_DATE_EPOCH=1619538668
+export SOURCE_DATE_EPOCH=1619548369
 rm -rf %{buildroot}
 ## install_prepend content
 export CPATH=/usr/include
@@ -561,6 +547,7 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/gcc/x86_64-generic-linux/11/install-tools/mkheaders
 /usr/lib64/gcc/x86_64-generic-linux/11/install-tools/mkheaders.conf
 /usr/lib64/gcc/x86_64-generic-linux/11/install-tools/mkinstalldirs
+/usr/lib64/gcc/x86_64-generic-linux/11/libcaf_single.a
 /usr/lib64/gcc/x86_64-generic-linux/11/liblto_plugin.so
 /usr/lib64/gcc/x86_64-generic-linux/11/lto-wrapper
 /usr/lib64/gcc/x86_64-generic-linux/11/lto1
@@ -2195,7 +2182,10 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib32/libgfortran.a
 /usr/lib32/libgfortran.so
 /usr/lib32/libgfortran.spec
+/usr/lib32/libgo.a
 /usr/lib32/libgo.so
+/usr/lib32/libgobegin.a
+/usr/lib32/libgolibbegin.a
 /usr/lib32/libgomp.a
 /usr/lib32/libgomp.so
 /usr/lib32/libgomp.spec
@@ -2492,16 +2482,6 @@ cp -d %{buildroot}/usr/lib64/libquadmath.so* %{buildroot}/usr/lib64/haswell/ || 
 /usr/lib64/libubsan.so
 /usr/lib64/libubsan.so.1
 /usr/lib64/libubsan.so.1.0.0
-
-%files staticdev
-%defattr(-,root,root,-)
-/usr/lib64/gcc/x86_64-generic-linux/11/libcaf_single.a
-
-%files staticdev32
-%defattr(-,root,root,-)
-/usr/lib32/libgo.a
-/usr/lib32/libgobegin.a
-/usr/lib32/libgolibbegin.a
 
 %files -n libgcc1
 %defattr(-,root,root,-)
