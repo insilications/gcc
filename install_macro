@@ -82,8 +82,3 @@ popd
 # Also clang compat
 (cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-generic-linux/*/*.[ao])
 (cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-generic-linux/*/32/*.[ao])
-
-# %find_lang cpplib cpp.lang
-# %find_lang gcc tmp.lang
-# %find_lang libstdc++ cxx.lang
-# cat *.lang > gcc.lang

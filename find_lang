@@ -1,0 +1,4 @@
+%find_lang cpplib cpp.lang
+%find_lang gcc tmp.lang
+%find_lang libstdc++ cxx.lang
+cat *.lang > gcc.lang
