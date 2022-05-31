@@ -1,4 +1,4 @@
-make -j16 V=1 VERBOSE=1
+make -j12 V=1 VERBOSE=1
 
 # Work around libstdc++'s use of weak symbols to libpthread in static
 # mode: libpthread doesn't get pulled in and therefore we get crashes

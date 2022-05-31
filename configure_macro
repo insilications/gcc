@@ -21,7 +21,7 @@ pushd ../gcc-build
     --disable-default-pie \
     --enable-gnu-indirect-function \
     --enable-host-shared \
-    --enable-languages="c,c++,fortran,go,jit" \
+    --enable-languages="c,c++,jit" \
     --enable-ld=default \
     --enable-libstdcxx-pch \
     --enable-linker-build-id \
