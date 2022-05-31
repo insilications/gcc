@@ -5,16 +5,16 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 12.1.0
-Release  : 2591
+Release  : 2592
 URL      : file:///insilications/apps/gcc-12.1.0.tar.gz
 Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0-with-GCC-exception GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Requires: gcc-go = %{version}-%{release}
-Requires: gcc-lib = %{version}-%{release}
+Requires: gcc-go-lib = %{version}-%{release}
+Requires: gcc-jit = %{version}-%{release}
 Requires: gcc-libgcc32 = %{version}-%{release}
 Requires: gcc-libs-math = %{version}-%{release}
 Requires: gcc-libstdc++32 = %{version}-%{release}
@@ -32,6 +32,7 @@ Provides: gcc-symlinks
 Provides: gcov
 Provides: gfortran
 Provides: gfortran-symlinks
+Requires: gcc-doc = %{version}-%{release}
 Requires: libgcc1 = %{version}-%{release}
 Requires: libstdc++ = %{version}-%{release}
 BuildRequires : Sphinx
@@ -105,15 +106,6 @@ Patch8: 0008-tune-inline.patch
 %description
 No detailed description available
 
-%package bin
-Summary: bin components for the gcc package.
-Group: Binaries
-Requires: gcc-data = %{version}-%{release}
-
-%description bin
-bin components for the gcc package.
-
-
 %package data
 Summary: data components for the gcc package.
 Group: Data
@@ -125,8 +117,6 @@ data components for the gcc package.
 %package dev
 Summary: dev components for the gcc package.
 Group: Development
-Requires: gcc-lib = %{version}-%{release}
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Provides: gcc-devel = %{version}-%{release}
 Requires: gcc = %{version}-%{release}
@@ -150,20 +140,11 @@ dev components for the gcc package.
 Summary: dev32 components for the gcc package.
 Group: Default
 Requires: gcc-lib32 = %{version}-%{release}
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Requires: gcc-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the gcc package.
-
-
-%package doc
-Summary: doc components for the gcc package.
-Group: Documentation
-
-%description doc
-doc components for the gcc package.
 
 
 %package go
@@ -174,13 +155,20 @@ Group: Default
 go components for the gcc package.
 
 
-%package lib
-Summary: lib components for the gcc package.
-Group: Libraries
-Requires: gcc-data = %{version}-%{release}
+%package go-lib
+Summary: go-lib components for the gcc package.
+Group: Default
 
-%description lib
-lib components for the gcc package.
+%description go-lib
+go-lib components for the gcc package.
+
+
+%package jit
+Summary: jit components for the gcc package.
+Group: Default
+
+%description jit
+jit components for the gcc package.
 
 
 %package lib32
@@ -232,13 +220,21 @@ Group: Default
 locale components for the gcc package.
 
 
-%package staticdev
-Summary: staticdev components for the gcc package.
+%package staticdev32
+Summary: staticdev32 components for the gcc package.
 Group: Default
-Requires: gcc-dev = %{version}-%{release}
+Requires: gcc-dev32 = %{version}-%{release}
 
-%description staticdev
-staticdev components for the gcc package.
+%description staticdev32
+staticdev32 components for the gcc package.
+
+
+%package -n gcc-doc
+Summary: gcc-doc components for the gcc package.
+Group: Default
+
+%description -n gcc-doc
+gcc-doc components for the gcc package.
 
 
 %package -n libgcc1
@@ -278,22 +274,22 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1653997969
+export SOURCE_DATE_EPOCH=1654011025
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
-export CFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export ASMFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FCFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export LDFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
@@ -399,7 +395,7 @@ done
 
 
 %install
-export SOURCE_DATE_EPOCH=1653997969
+export SOURCE_DATE_EPOCH=1654011025
 rm -rf %{buildroot}
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -407,15 +403,15 @@ export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
-export CFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export ASMFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FCFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export LDFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
@@ -432,15 +428,21 @@ export PATH="/usr/bin/haswell:/usr/bin:/usr/sbin"
 
 pushd ../gcc-build
 %make_install
+
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+    pushd %{buildroot}/usr/lib32/pkgconfig
+    for i in *.pc ; do ln -s $i 32$i ; done
+    popd
+fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+    pushd %{buildroot}/usr/share/pkgconfig
+    for i in *.pc ; do ln -s $i 32$i ; done
+    popd
+fi
+
 cd -
-
-mkdir -p %{buildroot}-v3/usr/libexec/gccgo/bin
-rm -f %{buildroot}-v3/usr/bin/go
-rm -f %{buildroot}-v3/usr/bin/gofmt
-mkdir -p %{buildroot}-v4/usr/libexec/gccgo/bin
-rm -f %{buildroot}-v4/usr/bin/go
-rm -f %{buildroot}-v4/usr/bin/gofmt
-
 
 cd %{buildroot}/usr/bin
 if [ -e %{gcc_target}-g77 ]; then
@@ -506,10 +508,10 @@ popd
 (cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-generic-linux/*/*.[ao])
 (cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-generic-linux/*/32/*.[ao])
 
-%find_lang cpplib cpp.lang
-%find_lang gcc tmp.lang
-%find_lang libstdc++ cxx.lang
-cat *.lang > gcc.lang
+# %find_lang cpplib cpp.lang
+# %find_lang gcc tmp.lang
+# %find_lang libstdc++ cxx.lang
+# cat *.lang > gcc.lang
 ## install_macro end
 ## start %find_lang macros
 %find_lang cpplib
@@ -535,6 +537,7 @@ cat *.lang > gcc.lang
 /usr/bin/x86_64-generic-linux-c++
 /usr/bin/x86_64-generic-linux-g++
 /usr/bin/x86_64-generic-linux-gcc
+/usr/bin/x86_64-generic-linux-gcc-12
 /usr/bin/x86_64-generic-linux-gcc-ar
 /usr/bin/x86_64-generic-linux-gcc-nm
 /usr/bin/x86_64-generic-linux-gcc-ranlib
@@ -549,6 +552,102 @@ cat *.lang > gcc.lang
 /usr/lib64/crtprec32.o
 /usr/lib64/crtprec64.o
 /usr/lib64/crtprec80.o
+/usr/lib64/gcc/x86_64-generic-linux/12/cc1
+/usr/lib64/gcc/x86_64-generic-linux/12/cc1plus
+/usr/lib64/gcc/x86_64-generic-linux/12/collect2
+/usr/lib64/gcc/x86_64-generic-linux/12/crtbegin.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtbeginS.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtbeginT.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtend.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtendS.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtfastmath.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtprec32.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtprec64.o
+/usr/lib64/gcc/x86_64-generic-linux/12/crtprec80.o
+/usr/lib64/gcc/x86_64-generic-linux/12/f951
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_arithmetic.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_exceptions.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_features.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.f90
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.h
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib_kinds.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc.f90
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc_kinds.mod
+/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc_lib.h
+/usr/lib64/gcc/x86_64-generic-linux/12/g++-mapper-server
+/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/README
+/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/limits.h
+/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/pthread.h
+/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/syslimits.h
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixinc.sh
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixinc_list
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixincl
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/gsyslimits.h
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/include/README
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/macro_list
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkheaders
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkheaders.conf
+/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkinstalldirs
+/usr/lib64/gcc/x86_64-generic-linux/12/libcaf_single.a
+/usr/lib64/gcc/x86_64-generic-linux/12/libcaf_single.la
+/usr/lib64/gcc/x86_64-generic-linux/12/libgcc.a
+/usr/lib64/gcc/x86_64-generic-linux/12/libgcc_eh.a
+/usr/lib64/gcc/x86_64-generic-linux/12/libgcov.a
+/usr/lib64/gcc/x86_64-generic-linux/12/liblto_plugin.so
+/usr/lib64/gcc/x86_64-generic-linux/12/lto-wrapper
+/usr/lib64/gcc/x86_64-generic-linux/12/lto1
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/gtype.state
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ada/gcc-interface/ada-tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/all-tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/b-header-vars
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtin-attrs.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtin-types.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtins.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-family/c-common.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfg-flags.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cif-code.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/i386-isa.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/stringop.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/x86-tune.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/coroutine-builtins.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/cp-tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/operators.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/d/d-tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dbgcnt.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcov-counter.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gsstruct.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gtm-builtins.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/insn-notes.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/internal-fn.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/machmode.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/mode-classes.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/objc/objc-tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/omp-builtins.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/pass-instances.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/passes.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/plugin.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/predict.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/reg-notes.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sanitizer.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/stab.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sync-builtins.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target-insns.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/timevar.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/treestruct.def
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so.0
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so.0.0.0
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so.0
+/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so.0.0.0
 /usr/lib64/libasan.a
 /usr/lib64/libasan_preinit.o
 /usr/lib64/libatomic.a
@@ -577,10 +676,6 @@ cat *.lang > gcc.lang
 /usr/lib64/libtsan.a
 /usr/lib64/libtsan_preinit.o
 /usr/lib64/libubsan.a
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/x86_64-generic-linux-gcc-12
 
 %files data
 %defattr(-,root,root,-)
@@ -1402,15 +1497,6 @@ cat *.lang > gcc.lang
 /usr/include/c++/12/x86_64-generic-linux/ext/opt_random.h
 /usr/include/libgccjit++.h
 /usr/include/libgccjit.h
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbegin.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbeginS.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbeginT.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtend.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtendS.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtfastmath.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec32.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec64.o
-/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec80.o
 /usr/lib64/gcc/x86_64-generic-linux/12/32/finclude/ieee_arithmetic.mod
 /usr/lib64/gcc/x86_64-generic-linux/12/32/finclude/ieee_exceptions.mod
 /usr/lib64/gcc/x86_64-generic-linux/12/32/finclude/ieee_features.mod
@@ -1423,38 +1509,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/32/finclude/openacc_kinds.mod
 /usr/lib64/gcc/x86_64-generic-linux/12/32/finclude/openacc_lib.h
 /usr/lib64/gcc/x86_64-generic-linux/12/32/libcaf_single.la
-/usr/lib64/gcc/x86_64-generic-linux/12/buildid
-/usr/lib64/gcc/x86_64-generic-linux/12/cc1
-/usr/lib64/gcc/x86_64-generic-linux/12/cc1plus
-/usr/lib64/gcc/x86_64-generic-linux/12/cgo
-/usr/lib64/gcc/x86_64-generic-linux/12/collect2
-/usr/lib64/gcc/x86_64-generic-linux/12/crtbegin.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtbeginS.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtbeginT.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtend.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtendS.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtfastmath.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtprec32.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtprec64.o
-/usr/lib64/gcc/x86_64-generic-linux/12/crtprec80.o
-/usr/lib64/gcc/x86_64-generic-linux/12/f951
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_arithmetic.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_exceptions.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/ieee_features.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.f90
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.h
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/omp_lib_kinds.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc.f90
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc_kinds.mod
-/usr/lib64/gcc/x86_64-generic-linux/12/finclude/openacc_lib.h
-/usr/lib64/gcc/x86_64-generic-linux/12/g++-mapper-server
-/usr/lib64/gcc/x86_64-generic-linux/12/go1
-/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/README
-/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/limits.h
-/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/pthread.h
-/usr/lib64/gcc/x86_64-generic-linux/12/include-fixed/syslimits.h
 /usr/lib64/gcc/x86_64-generic-linux/12/include/ISO_Fortran_binding.h
 /usr/lib64/gcc/x86_64-generic-linux/12/include/acc_prof.h
 /usr/lib64/gcc/x86_64-generic-linux/12/include/adxintrin.h
@@ -1580,28 +1634,12 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/include/xsaveoptintrin.h
 /usr/lib64/gcc/x86_64-generic-linux/12/include/xsavesintrin.h
 /usr/lib64/gcc/x86_64-generic-linux/12/include/xtestintrin.h
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixinc.sh
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixinc_list
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/fixincl
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/gsyslimits.h
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/include/README
 /usr/lib64/gcc/x86_64-generic-linux/12/install-tools/include/limits.h
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/macro_list
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkheaders
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkheaders.conf
-/usr/lib64/gcc/x86_64-generic-linux/12/install-tools/mkinstalldirs
-/usr/lib64/gcc/x86_64-generic-linux/12/libcaf_single.la
 /usr/lib64/gcc/x86_64-generic-linux/12/liblto_plugin.la
-/usr/lib64/gcc/x86_64-generic-linux/12/liblto_plugin.so
-/usr/lib64/gcc/x86_64-generic-linux/12/lto-wrapper
-/usr/lib64/gcc/x86_64-generic-linux/12/lto1
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/gengtype
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/gtype.state
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ada/gcc-interface/ada-tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/addresses.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/alias.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/align.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/all-tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/alloc-pool.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ansidecl.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/array-traits.h
@@ -1610,17 +1648,12 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/attribs.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/auto-host.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/auto-profile.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/b-header-vars
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/backend.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/basic-block.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/bb-reorder.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/bitmap.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtin-attrs.def
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtin-types.def
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtins.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/builtins.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/bversion.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-family/c-common.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-family/c-common.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-family/c-objc.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-family/c-pragma.h
@@ -1628,7 +1661,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/c-tree.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/calls.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ccmp.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfg-flags.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfg.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfganal.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfgbuild.h
@@ -1639,7 +1671,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfgloopmanip.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cfgrtl.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cgraph.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cif-code.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/collect-utils.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/collect2-aix.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/collect2.h
@@ -1655,16 +1686,13 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/biarch64.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/gnu-user-common.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/gnu-user64.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/i386-isa.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/i386-opts.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/i386-protos.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/i386.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/linux-common.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/linux64.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/stringop.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/unix.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/x86-64.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/i386/x86-tune.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/initfini-array.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/linux-android.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/config/linux-protos.h
@@ -1674,22 +1702,17 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/context.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/convert.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/coretypes.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/coroutine-builtins.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/coverage.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/cp-tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/cp-tree.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/cxx-pretty-print.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/name-lookup.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/operators.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cp/type-utils.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cppbuiltin.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cppdefault.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cpplib.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/cselib.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ctfc.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/d/d-tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/data-streamer.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dbgcnt.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dbgcnt.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dbxout.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dce.h
@@ -1705,7 +1728,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic-path.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic-spec.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic-url.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/diagnostic.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/digraph.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/dojump.h
@@ -1741,7 +1763,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcc-rich-location.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcc-symtab.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcc.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcov-counter.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcov-io.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcse-common.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gcse.h
@@ -1774,7 +1795,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple-ssa.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple-streamer.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple-walk.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimple.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimplify-me.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gimplify.h
@@ -1784,11 +1804,9 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/graphds.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/graphite.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/graphviz.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gsstruct.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gstab.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gsyms.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gsyslimits.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gtm-builtins.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/gtype-desc.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/hard-reg-set.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/hash-map-traits.h
@@ -1816,9 +1834,7 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/insn-flags.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/insn-modes-inline.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/insn-modes.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/insn-notes.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/int-vector-builder.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/internal-fn.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/internal-fn.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/intl.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ipa-fnsummary.h
@@ -1852,19 +1868,15 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/lto-compress.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/lto-section-names.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/lto-streamer.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/machmode.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/machmode.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/md5.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/mem-stats-traits.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/mem-stats.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/memmodel.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/memory-block.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/mode-classes.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/mux-utils.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/objc/objc-tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/obstack-utils.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/obstack.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/omp-builtins.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/omp-expand.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/omp-general.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/omp-low.h
@@ -1875,7 +1887,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs-libfuncs.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs-query.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs-tree.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optabs.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optinfo-emit-json.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/optinfo.h
@@ -1884,17 +1895,13 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/opts.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ordered-hash-map.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/output.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/pass-instances.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/pass_manager.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/passes.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/plugin-api.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/plugin-version.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/plugin.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/plugin.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/pointer-query.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/poly-int-types.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/poly-int.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/predict.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/predict.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/prefix.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/pretty-print.h
@@ -1909,7 +1916,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/real.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/realmpfr.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/recog.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/reg-notes.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/regcprop.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/regrename.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/regs.h
@@ -1919,7 +1925,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl-error.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl-iter.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl-ssa.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtl.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtlanal.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtlhash.h
@@ -1927,7 +1932,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/rtx-vector-builder.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/run-rtl-passes.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/safe-ctype.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sanitizer.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sbitmap.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sched-int.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sel-sched-dump.h
@@ -1948,7 +1952,6 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sreal.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ssa-iterators.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/ssa.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/stab.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/statistics.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/stmt.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/stor-layout.h
@@ -1959,16 +1962,12 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/symtab-clones.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/symtab-thunks.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/symtab.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/sync-builtins.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/system.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target-def.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target-globals.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target-hooks-macros.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target-insns.def
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/target.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/targhooks.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/timevar.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/timevar.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tm-preds.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tm.h
@@ -2033,9 +2032,7 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree-vector-builder.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree-vectorizer.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree-vrp.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tree.h
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/treestruct.def
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tristate.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tsan.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/tsystem.h
@@ -2063,168 +2060,7 @@ cat *.lang > gcc.lang
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/xcoff.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/include/xcoffout.h
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.la
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so.0
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcc1plugin.so.0.0.0
 /usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.la
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so.0
-/usr/lib64/gcc/x86_64-generic-linux/12/plugin/libcp1plugin.so.0.0.0
-/usr/lib64/gcc/x86_64-generic-linux/12/test2json
-/usr/lib64/gcc/x86_64-generic-linux/12/vet
-/usr/lib64/go/12/x86_64-generic-linux/archive/tar.gox
-/usr/lib64/go/12/x86_64-generic-linux/archive/zip.gox
-/usr/lib64/go/12/x86_64-generic-linux/bufio.gox
-/usr/lib64/go/12/x86_64-generic-linux/bytes.gox
-/usr/lib64/go/12/x86_64-generic-linux/compress/bzip2.gox
-/usr/lib64/go/12/x86_64-generic-linux/compress/flate.gox
-/usr/lib64/go/12/x86_64-generic-linux/compress/gzip.gox
-/usr/lib64/go/12/x86_64-generic-linux/compress/lzw.gox
-/usr/lib64/go/12/x86_64-generic-linux/compress/zlib.gox
-/usr/lib64/go/12/x86_64-generic-linux/container/heap.gox
-/usr/lib64/go/12/x86_64-generic-linux/container/list.gox
-/usr/lib64/go/12/x86_64-generic-linux/container/ring.gox
-/usr/lib64/go/12/x86_64-generic-linux/context.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/aes.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/cipher.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/des.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/dsa.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/ecdsa.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/ed25519.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/elliptic.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/hmac.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/md5.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/rand.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/rc4.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/rsa.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/sha1.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/sha256.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/sha512.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/subtle.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/tls.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/x509.gox
-/usr/lib64/go/12/x86_64-generic-linux/crypto/x509/pkix.gox
-/usr/lib64/go/12/x86_64-generic-linux/database/sql.gox
-/usr/lib64/go/12/x86_64-generic-linux/database/sql/driver.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/buildinfo.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/dwarf.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/elf.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/gosym.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/macho.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/pe.gox
-/usr/lib64/go/12/x86_64-generic-linux/debug/plan9obj.gox
-/usr/lib64/go/12/x86_64-generic-linux/embed.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/ascii85.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/asn1.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/base32.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/base64.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/binary.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/csv.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/gob.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/hex.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/json.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/pem.gox
-/usr/lib64/go/12/x86_64-generic-linux/encoding/xml.gox
-/usr/lib64/go/12/x86_64-generic-linux/errors.gox
-/usr/lib64/go/12/x86_64-generic-linux/expvar.gox
-/usr/lib64/go/12/x86_64-generic-linux/flag.gox
-/usr/lib64/go/12/x86_64-generic-linux/fmt.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/ast.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/build.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/build/constraint.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/constant.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/doc.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/format.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/importer.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/parser.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/printer.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/scanner.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/token.gox
-/usr/lib64/go/12/x86_64-generic-linux/go/types.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash/adler32.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash/crc32.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash/crc64.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash/fnv.gox
-/usr/lib64/go/12/x86_64-generic-linux/hash/maphash.gox
-/usr/lib64/go/12/x86_64-generic-linux/html.gox
-/usr/lib64/go/12/x86_64-generic-linux/html/template.gox
-/usr/lib64/go/12/x86_64-generic-linux/image.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/color.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/color/palette.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/draw.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/gif.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/jpeg.gox
-/usr/lib64/go/12/x86_64-generic-linux/image/png.gox
-/usr/lib64/go/12/x86_64-generic-linux/index/suffixarray.gox
-/usr/lib64/go/12/x86_64-generic-linux/internal/reflectlite.gox
-/usr/lib64/go/12/x86_64-generic-linux/internal/unsafeheader.gox
-/usr/lib64/go/12/x86_64-generic-linux/io.gox
-/usr/lib64/go/12/x86_64-generic-linux/io/fs.gox
-/usr/lib64/go/12/x86_64-generic-linux/io/ioutil.gox
-/usr/lib64/go/12/x86_64-generic-linux/log.gox
-/usr/lib64/go/12/x86_64-generic-linux/log/syslog.gox
-/usr/lib64/go/12/x86_64-generic-linux/math.gox
-/usr/lib64/go/12/x86_64-generic-linux/math/big.gox
-/usr/lib64/go/12/x86_64-generic-linux/math/bits.gox
-/usr/lib64/go/12/x86_64-generic-linux/math/cmplx.gox
-/usr/lib64/go/12/x86_64-generic-linux/math/rand.gox
-/usr/lib64/go/12/x86_64-generic-linux/mime.gox
-/usr/lib64/go/12/x86_64-generic-linux/mime/multipart.gox
-/usr/lib64/go/12/x86_64-generic-linux/mime/quotedprintable.gox
-/usr/lib64/go/12/x86_64-generic-linux/net.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/cgi.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/cookiejar.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/fcgi.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/httptest.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/httptrace.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/httputil.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/http/pprof.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/mail.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/netip.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/rpc.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/rpc/jsonrpc.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/smtp.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/textproto.gox
-/usr/lib64/go/12/x86_64-generic-linux/net/url.gox
-/usr/lib64/go/12/x86_64-generic-linux/os.gox
-/usr/lib64/go/12/x86_64-generic-linux/os/exec.gox
-/usr/lib64/go/12/x86_64-generic-linux/os/signal.gox
-/usr/lib64/go/12/x86_64-generic-linux/os/user.gox
-/usr/lib64/go/12/x86_64-generic-linux/path.gox
-/usr/lib64/go/12/x86_64-generic-linux/path/filepath.gox
-/usr/lib64/go/12/x86_64-generic-linux/reflect.gox
-/usr/lib64/go/12/x86_64-generic-linux/regexp.gox
-/usr/lib64/go/12/x86_64-generic-linux/regexp/syntax.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime/cgo.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime/debug.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime/metrics.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime/pprof.gox
-/usr/lib64/go/12/x86_64-generic-linux/runtime/trace.gox
-/usr/lib64/go/12/x86_64-generic-linux/sort.gox
-/usr/lib64/go/12/x86_64-generic-linux/strconv.gox
-/usr/lib64/go/12/x86_64-generic-linux/strings.gox
-/usr/lib64/go/12/x86_64-generic-linux/sync.gox
-/usr/lib64/go/12/x86_64-generic-linux/sync/atomic.gox
-/usr/lib64/go/12/x86_64-generic-linux/syscall.gox
-/usr/lib64/go/12/x86_64-generic-linux/testing.gox
-/usr/lib64/go/12/x86_64-generic-linux/testing/fstest.gox
-/usr/lib64/go/12/x86_64-generic-linux/testing/internal/testdeps.gox
-/usr/lib64/go/12/x86_64-generic-linux/testing/iotest.gox
-/usr/lib64/go/12/x86_64-generic-linux/testing/quick.gox
-/usr/lib64/go/12/x86_64-generic-linux/text/scanner.gox
-/usr/lib64/go/12/x86_64-generic-linux/text/tabwriter.gox
-/usr/lib64/go/12/x86_64-generic-linux/text/template.gox
-/usr/lib64/go/12/x86_64-generic-linux/text/template/parse.gox
-/usr/lib64/go/12/x86_64-generic-linux/time.gox
-/usr/lib64/go/12/x86_64-generic-linux/time/tzdata.gox
-/usr/lib64/go/12/x86_64-generic-linux/unicode.gox
-/usr/lib64/go/12/x86_64-generic-linux/unicode/utf16.gox
-/usr/lib64/go/12/x86_64-generic-linux/unicode/utf8.gox
 /usr/lib64/libatomic.la
 /usr/lib64/libatomic.so
 /usr/lib64/libgcc_s.so
@@ -2234,7 +2070,6 @@ cat *.lang > gcc.lang
 /usr/lib64/libgfortran.spec
 /usr/lib64/libgo.la
 /usr/lib64/libgomp.la
-/usr/lib64/libgomp.so
 /usr/lib64/libgomp.spec
 /usr/lib64/libitm.la
 /usr/lib64/libitm.so
@@ -2242,7 +2077,6 @@ cat *.lang > gcc.lang
 /usr/lib64/libquadmath.la
 /usr/lib64/libquadmath.so
 /usr/lib64/libssp.la
-/usr/lib64/libssp.so
 /usr/lib64/libssp_nonshared.la
 /usr/lib64/libstdc++.la
 /usr/lib64/libstdc++.so
@@ -2428,11 +2262,8 @@ cat *.lang > gcc.lang
 /usr/lib32/libgfortran.la
 /usr/lib32/libgfortran.so
 /usr/lib32/libgfortran.spec
-/usr/lib32/libgo.a
 /usr/lib32/libgo.la
 /usr/lib32/libgo.so
-/usr/lib32/libgobegin.a
-/usr/lib32/libgolibbegin.a
 /usr/lib32/libgomp.a
 /usr/lib32/libgomp.la
 /usr/lib32/libgomp.so
@@ -2459,47 +2290,193 @@ cat *.lang > gcc.lang
 /usr/lib32/libubsan.a
 /usr/lib32/libubsan.la
 /usr/lib32/libubsan.so
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbegin.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbeginS.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtbeginT.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtend.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtendS.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtfastmath.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec32.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec64.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/crtprec80.o
+/usr/lib64/gcc/x86_64-generic-linux/12/32/libcaf_single.a
+/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcc.a
+/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcc_eh.a
+/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcov.a
 /usr/share/gdb/auto-load/usr/lib32/libstdc++.so.6.0.30-gdb.py
-
-%files doc
-%defattr(0644,root,root,0755)
-/usr/share/info/cpp.info
-/usr/share/info/cppinternals.info
-/usr/share/info/gcc.info
-/usr/share/info/gccgo.info
-/usr/share/info/gccinstall.info
-/usr/share/info/gccint.info
-/usr/share/info/gfortran.info
-/usr/share/info/libgccjit.info
-/usr/share/info/libgomp.info
-/usr/share/info/libitm.info
-/usr/share/info/libquadmath.info
-/usr/share/man/man1/cpp.1
-/usr/share/man/man1/g++.1
-/usr/share/man/man1/gcc.1
-/usr/share/man/man1/gccgo.1
-/usr/share/man/man1/gcov-dump.1
-/usr/share/man/man1/gcov-tool.1
-/usr/share/man/man1/gcov.1
-/usr/share/man/man1/gfortran.1
-/usr/share/man/man1/go.1
-/usr/share/man/man1/gofmt.1
-/usr/share/man/man1/lto-dump.1
-/usr/share/man/man7/fsf-funding.7
-/usr/share/man/man7/gfdl.7
-/usr/share/man/man7/gpl.7
 
 %files go
 %defattr(-,root,root,-)
 /usr/bin/gccgo
 /usr/bin/x86_64-generic-linux-gccgo
+/usr/lib64/gcc/x86_64-generic-linux/12/buildid
+/usr/lib64/gcc/x86_64-generic-linux/12/cgo
+/usr/lib64/gcc/x86_64-generic-linux/12/go1
+/usr/lib64/gcc/x86_64-generic-linux/12/test2json
+/usr/lib64/gcc/x86_64-generic-linux/12/vet
 /usr/lib64/libgo.so
-/usr/lib64/libgo.so.21
-/usr/lib64/libgo.so.21.0.0
 /usr/libexec/gccgo/bin/go
 /usr/libexec/gccgo/bin/gofmt
 
-%files lib
+%files go-lib
+%defattr(-,root,root,-)
+/usr/lib64/go/12/x86_64-generic-linux/archive/tar.gox
+/usr/lib64/go/12/x86_64-generic-linux/archive/zip.gox
+/usr/lib64/go/12/x86_64-generic-linux/bufio.gox
+/usr/lib64/go/12/x86_64-generic-linux/bytes.gox
+/usr/lib64/go/12/x86_64-generic-linux/compress/bzip2.gox
+/usr/lib64/go/12/x86_64-generic-linux/compress/flate.gox
+/usr/lib64/go/12/x86_64-generic-linux/compress/gzip.gox
+/usr/lib64/go/12/x86_64-generic-linux/compress/lzw.gox
+/usr/lib64/go/12/x86_64-generic-linux/compress/zlib.gox
+/usr/lib64/go/12/x86_64-generic-linux/container/heap.gox
+/usr/lib64/go/12/x86_64-generic-linux/container/list.gox
+/usr/lib64/go/12/x86_64-generic-linux/container/ring.gox
+/usr/lib64/go/12/x86_64-generic-linux/context.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/aes.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/cipher.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/des.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/dsa.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/ecdsa.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/ed25519.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/elliptic.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/hmac.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/md5.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/rand.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/rc4.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/rsa.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/sha1.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/sha256.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/sha512.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/subtle.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/tls.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/x509.gox
+/usr/lib64/go/12/x86_64-generic-linux/crypto/x509/pkix.gox
+/usr/lib64/go/12/x86_64-generic-linux/database/sql.gox
+/usr/lib64/go/12/x86_64-generic-linux/database/sql/driver.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/buildinfo.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/dwarf.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/elf.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/gosym.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/macho.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/pe.gox
+/usr/lib64/go/12/x86_64-generic-linux/debug/plan9obj.gox
+/usr/lib64/go/12/x86_64-generic-linux/embed.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/ascii85.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/asn1.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/base32.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/base64.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/binary.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/csv.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/gob.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/hex.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/json.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/pem.gox
+/usr/lib64/go/12/x86_64-generic-linux/encoding/xml.gox
+/usr/lib64/go/12/x86_64-generic-linux/errors.gox
+/usr/lib64/go/12/x86_64-generic-linux/expvar.gox
+/usr/lib64/go/12/x86_64-generic-linux/flag.gox
+/usr/lib64/go/12/x86_64-generic-linux/fmt.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/ast.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/build.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/build/constraint.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/constant.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/doc.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/format.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/importer.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/parser.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/printer.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/scanner.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/token.gox
+/usr/lib64/go/12/x86_64-generic-linux/go/types.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash/adler32.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash/crc32.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash/crc64.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash/fnv.gox
+/usr/lib64/go/12/x86_64-generic-linux/hash/maphash.gox
+/usr/lib64/go/12/x86_64-generic-linux/html.gox
+/usr/lib64/go/12/x86_64-generic-linux/html/template.gox
+/usr/lib64/go/12/x86_64-generic-linux/image.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/color.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/color/palette.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/draw.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/gif.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/jpeg.gox
+/usr/lib64/go/12/x86_64-generic-linux/image/png.gox
+/usr/lib64/go/12/x86_64-generic-linux/index/suffixarray.gox
+/usr/lib64/go/12/x86_64-generic-linux/internal/reflectlite.gox
+/usr/lib64/go/12/x86_64-generic-linux/internal/unsafeheader.gox
+/usr/lib64/go/12/x86_64-generic-linux/io.gox
+/usr/lib64/go/12/x86_64-generic-linux/io/fs.gox
+/usr/lib64/go/12/x86_64-generic-linux/io/ioutil.gox
+/usr/lib64/go/12/x86_64-generic-linux/log.gox
+/usr/lib64/go/12/x86_64-generic-linux/log/syslog.gox
+/usr/lib64/go/12/x86_64-generic-linux/math.gox
+/usr/lib64/go/12/x86_64-generic-linux/math/big.gox
+/usr/lib64/go/12/x86_64-generic-linux/math/bits.gox
+/usr/lib64/go/12/x86_64-generic-linux/math/cmplx.gox
+/usr/lib64/go/12/x86_64-generic-linux/math/rand.gox
+/usr/lib64/go/12/x86_64-generic-linux/mime.gox
+/usr/lib64/go/12/x86_64-generic-linux/mime/multipart.gox
+/usr/lib64/go/12/x86_64-generic-linux/mime/quotedprintable.gox
+/usr/lib64/go/12/x86_64-generic-linux/net.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/cgi.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/cookiejar.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/fcgi.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/httptest.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/httptrace.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/httputil.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/http/pprof.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/mail.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/netip.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/rpc.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/rpc/jsonrpc.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/smtp.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/textproto.gox
+/usr/lib64/go/12/x86_64-generic-linux/net/url.gox
+/usr/lib64/go/12/x86_64-generic-linux/os.gox
+/usr/lib64/go/12/x86_64-generic-linux/os/exec.gox
+/usr/lib64/go/12/x86_64-generic-linux/os/signal.gox
+/usr/lib64/go/12/x86_64-generic-linux/os/user.gox
+/usr/lib64/go/12/x86_64-generic-linux/path.gox
+/usr/lib64/go/12/x86_64-generic-linux/path/filepath.gox
+/usr/lib64/go/12/x86_64-generic-linux/reflect.gox
+/usr/lib64/go/12/x86_64-generic-linux/regexp.gox
+/usr/lib64/go/12/x86_64-generic-linux/regexp/syntax.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime/cgo.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime/debug.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime/metrics.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime/pprof.gox
+/usr/lib64/go/12/x86_64-generic-linux/runtime/trace.gox
+/usr/lib64/go/12/x86_64-generic-linux/sort.gox
+/usr/lib64/go/12/x86_64-generic-linux/strconv.gox
+/usr/lib64/go/12/x86_64-generic-linux/strings.gox
+/usr/lib64/go/12/x86_64-generic-linux/sync.gox
+/usr/lib64/go/12/x86_64-generic-linux/sync/atomic.gox
+/usr/lib64/go/12/x86_64-generic-linux/syscall.gox
+/usr/lib64/go/12/x86_64-generic-linux/testing.gox
+/usr/lib64/go/12/x86_64-generic-linux/testing/fstest.gox
+/usr/lib64/go/12/x86_64-generic-linux/testing/internal/testdeps.gox
+/usr/lib64/go/12/x86_64-generic-linux/testing/iotest.gox
+/usr/lib64/go/12/x86_64-generic-linux/testing/quick.gox
+/usr/lib64/go/12/x86_64-generic-linux/text/scanner.gox
+/usr/lib64/go/12/x86_64-generic-linux/text/tabwriter.gox
+/usr/lib64/go/12/x86_64-generic-linux/text/template.gox
+/usr/lib64/go/12/x86_64-generic-linux/text/template/parse.gox
+/usr/lib64/go/12/x86_64-generic-linux/time.gox
+/usr/lib64/go/12/x86_64-generic-linux/time/tzdata.gox
+/usr/lib64/go/12/x86_64-generic-linux/unicode.gox
+/usr/lib64/go/12/x86_64-generic-linux/unicode/utf16.gox
+/usr/lib64/go/12/x86_64-generic-linux/unicode/utf8.gox
+/usr/lib64/libgo.so.21
+/usr/lib64/libgo.so.21.0.0
+
+%files jit
 %defattr(-,root,root,-)
 /usr/lib64/libgccjit.so.0
 /usr/lib64/libgccjit.so.0.0.1
@@ -2538,12 +2515,14 @@ cat *.lang > gcc.lang
 /usr/lib64/libatomic.so.1.2.0
 /usr/lib64/libgfortran.so.5
 /usr/lib64/libgfortran.so.5.0.0
+/usr/lib64/libgomp.so
 /usr/lib64/libgomp.so.1
 /usr/lib64/libgomp.so.1.0.0
 /usr/lib64/libitm.so.1
 /usr/lib64/libitm.so.1.0.0
 /usr/lib64/libquadmath.so.0
 /usr/lib64/libquadmath.so.0.0.0
+/usr/lib64/libssp.so
 /usr/lib64/libssp.so.0
 /usr/lib64/libssp.so.0.0.0
 
@@ -2572,16 +2551,39 @@ cat *.lang > gcc.lang
 /usr/lib64/libubsan.so.1
 /usr/lib64/libubsan.so.1.0.0
 
-%files staticdev
+%files staticdev32
 %defattr(-,root,root,-)
-/usr/lib64/gcc/x86_64-generic-linux/12/32/libcaf_single.a
-/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcc.a
-/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcc_eh.a
-/usr/lib64/gcc/x86_64-generic-linux/12/32/libgcov.a
-/usr/lib64/gcc/x86_64-generic-linux/12/libcaf_single.a
-/usr/lib64/gcc/x86_64-generic-linux/12/libgcc.a
-/usr/lib64/gcc/x86_64-generic-linux/12/libgcc_eh.a
-/usr/lib64/gcc/x86_64-generic-linux/12/libgcov.a
+/usr/lib32/libgo.a
+/usr/lib32/libgobegin.a
+/usr/lib32/libgolibbegin.a
+
+%files -n gcc-doc
+%defattr(-,root,root,-)
+/usr/share/info/cpp.info
+/usr/share/info/cppinternals.info
+/usr/share/info/gcc.info
+/usr/share/info/gccgo.info
+/usr/share/info/gccinstall.info
+/usr/share/info/gccint.info
+/usr/share/info/gfortran.info
+/usr/share/info/libgccjit.info
+/usr/share/info/libgomp.info
+/usr/share/info/libitm.info
+/usr/share/info/libquadmath.info
+/usr/share/man/man1/cpp.1
+/usr/share/man/man1/g++.1
+/usr/share/man/man1/gcc.1
+/usr/share/man/man1/gccgo.1
+/usr/share/man/man1/gcov-dump.1
+/usr/share/man/man1/gcov-tool.1
+/usr/share/man/man1/gcov.1
+/usr/share/man/man1/gfortran.1
+/usr/share/man/man1/go.1
+/usr/share/man/man1/gofmt.1
+/usr/share/man/man1/lto-dump.1
+/usr/share/man/man7/fsf-funding.7
+/usr/share/man/man7/gfdl.7
+/usr/share/man/man7/gpl.7
 
 %files -n libgcc1
 %defattr(-,root,root,-)

@@ -3,6 +3,20 @@
 
 pushd ../gcc-build
 %make_install
+
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+    pushd %{buildroot}/usr/lib32/pkgconfig
+    for i in *.pc ; do ln -s $i 32$i ; done
+    popd
+fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+    pushd %{buildroot}/usr/share/pkgconfig
+    for i in *.pc ; do ln -s $i 32$i ; done
+    popd
+fi
+
 cd -
 
 cd %{buildroot}/usr/bin
