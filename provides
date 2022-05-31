@@ -1,0 +1,10 @@
+gcc-symlinks
+cpp
+cpp-symlinks
+gcov
+gfortran-symlinks
+g77
+g77-symlinks
+g++-symlinks
+g++
+gfortran

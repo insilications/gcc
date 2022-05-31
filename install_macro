@@ -1,0 +1,3 @@
+pushd ../gcc-build
+%make_install
+popd

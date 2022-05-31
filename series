@@ -1,16 +1,9 @@
 gcc-stable-branch.patch
-0001-Fix-stack-protection-issues.patch
-openmp-vectorize-v2.patch
-fortran-vector-v2.patch
 optimize.patch
 vectorize.patch
 gomp-relax.patch
-memcpy-avx2.patch
 avx512-when-we-ask-for-it.patch
 arch-native-override.patch
 0001-Ignore-Werror-if-GCC_IGNORE_WERROR-environment-varia.patch
 0001-Always-use-z-now-when-linking-with-pie.patch
 tune-inline.patch
-vectorcost.patch
-gcc-hj-latest.patch
-avx512move.patch
