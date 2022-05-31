@@ -1,0 +1,2 @@
+export LIBRARY_PATH=/usr/lib64
+export CPATH="/usr/include:/usr/local/cuda/include"
