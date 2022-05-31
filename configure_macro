@@ -1,46 +1,49 @@
+%define gcc_target x86_64-generic-linux
+%define gccpath gcc-12.1.0
 if [ ! -d "../gcc-build" ]; then
     mkdir ../gcc-build;
 fi
 pushd ../gcc-build
 ../%{gccpath}/configure \
-    --prefix=/usr \
-    --with-pkgversion='Clear Linux OS for Intel Architecture' \
-    --libdir=/usr/lib64 \
-    --enable-libstdcxx-pch \
-    --libexecdir=/usr/lib64 \
-    --with-system-zlib \
-    --enable-shared \
-    --enable-gnu-indirect-function \
-    --disable-vtable-verify \
-    --enable-threads=posix \
-    --enable-__cxa_atexit \
-    --enable-plugin \
-    --enable-ld=default \
-    --enable-clocale=gnu \
-    --disable-multiarch \
-    --enable-multilib \
-    --enable-lto \
-    --enable-linker-build-id \
     --build=%{gcc_target} \
-    --target=%{gcc_target} \
-    --enable-languages="c,c++,fortran,go" \
-    --with-ppl=yes \
-    --with-isl \
-    --includedir=/usr/include \
-    --exec-prefix=/usr \
-    --with-glibc-version=2.19 \
-    --with-gnu-ld \
-    --with-tune=native \
-    --with-arch=native \
-    --enable-bootstrap \
-    --disable-cet \
     --disable-libmpx \
-    --with-gcc-major-version-only \
-    --disable-default-pie \
-    --disable-werror \
-    --with-system-zlib \
     --disable-libunwind-exceptions \
+    --disable-multiarch \
+    --disable-vtable-verify \
+    --disable-werror \
+    --disable-bootstrap \
+    --disable-cet \
     --disable-default-ssp \
-    --with-gmp \
-    --enable-cxx-flags="-g3 -ggdb -fvisibility-inlines-hidden -O3 -flto=16 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -fomit-frame-pointer -fexceptions" \
-    --with-build-config=bootstrap-lto
+    --enable-clocale=gnu \
+    --enable-__cxa_atexit \
+    --disable-default-pie \
+    --enable-gnu-indirect-function \
+    --enable-host-shared \
+    --enable-languages="c,c++,fortran,go,jit" \
+    --enable-ld=default \
+    --enable-libstdcxx-pch \
+    --enable-linker-build-id \
+    --enable-linux-futex \
+    --enable-lto \
+    --with-pic \
+    --enable-multilib \
+    --enable-plugin \
+    --enable-shared \
+    --enable-threads=posix \
+    --exec-prefix=/usr \
+    --includedir=/usr/include \
+    --libdir=/usr/lib64 \
+    --libexecdir=/usr/lib64 \
+    --prefix=/usr \
+    --target=%{gcc_target}\
+    --with-arch=native \
+    --with-gcc-major-version-only \
+    --with-glibc-version=2.35 \
+    --with-gnu-ld \
+    --with-isl \
+    --with-pkgversion='Clear Linux OS for Intel Architecture'\
+    --with-ppl=yes \
+    --with-system-zlib \
+    --with-tune=native \
+    --with-zstd \
+    --enable-cxx-flags="-g3 -ggdb -fvisibility-inlines-hidden -O3 -flto=16 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -fomit-frame-pointer -fexceptions"

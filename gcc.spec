@@ -32,25 +32,6 @@ License  : BSD-3-Clause BSL-1.0 GFDL-1.2 GFDL-1.3 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-
 
 %prep
 %setup -q -n %{gccpath}
-%patch0 -p1
-
-#%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
-%patch5 -p1
-%patch6 -p1
-%patch9 -p1
-
-%patch12 -p1
-
-%patch14 -p1
-
-%patch15 -p1
-%patch16 -p1
-%patch19 -p1
-#%patch20 -p1
-
-#%patch30 -p1
 
 
 
