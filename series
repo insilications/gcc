@@ -1,8 +1,8 @@
-optimize.patch
-vectorize.patch
-gomp-relax.patch
-avx512-when-we-ask-for-it.patch
-arch-native-override.patch
-0001-Ignore-Werror-if-GCC_IGNORE_WERROR-environment-varia.patch
-0001-Always-use-z-now-when-linking-with-pie.patch
-tune-inline.patch
+0001-optimize.patch
+0002-vectorize.patch
+0003-gomp-relax.patch
+0004-avx512-when-we-ask-for-it.patch
+0005-arch-native-override.patch
+0006-Ignore-Werror-if-GCC_IGNORE_WERROR-envvar-set.patch
+0007-Always-use-z-now-when-linking-with-pie.patch
+0008-tune-inline.patch

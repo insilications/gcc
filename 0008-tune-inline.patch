@@ -1,0 +1,25 @@
+From b8ea3290b3173a0c7499d9170af76724cc140eec Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Tue, 31 May 2022 05:11:31 -0300
+Subject: [PATCH 8/8] tune inline
+
+---
+ gcc/params.opt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gcc/params.opt b/gcc/params.opt
+index b88e13720..866ae1388 100644
+--- a/gcc/params.opt
++++ b/gcc/params.opt
+@@ -226,7 +226,7 @@ Common Joined UInteger Var(param_inline_min_speedup) Init(30) Optimization Integ
+ The minimal estimated speedup allowing inliner to ignore inline-insns-single and inline-insns-auto.
+ 
+ -param=inline-unit-growth=
+-Common Joined UInteger Var(param_inline_unit_growth) Init(40) Optimization Param
++Common Joined UInteger Var(param_inline_unit_growth) Init(80) Optimization Param
+ How much can given compilation unit grow because of the inlining (in percent).
+ 
+ -param=integer-share-limit=
+-- 
+2.36.0
+

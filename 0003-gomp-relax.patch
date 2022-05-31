@@ -1,0 +1,28 @@
+From bb2c518aed08a2cf8bd1651ecdc35bd39400325e Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Tue, 31 May 2022 05:10:21 -0300
+Subject: [PATCH 3/8] gomp relax
+
+---
+ libgomp/config/linux/wait.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/libgomp/config/linux/wait.h b/libgomp/config/linux/wait.h
+index 0ba9db5a4..a0837a1b0 100644
+--- a/libgomp/config/linux/wait.h
++++ b/libgomp/config/linux/wait.h
+@@ -57,7 +57,10 @@ static inline int do_spin (int *addr, int val)
+     if (__builtin_expect (__atomic_load_n (addr, MEMMODEL_RELAXED) != val, 0))
+       return 0;
+     else
+-      cpu_relax ();
++      if (i < count/2) 
++	       __asm__ __volatile__("nop\nnop\nnop\n": : :"memory");
++      else
++	      cpu_relax ();
+   return 1;
+ }
+ 
+-- 
+2.36.0
+

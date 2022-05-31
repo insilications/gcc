@@ -1,8 +1,15 @@
-export CPATH=/usr/include
-export LIBRARY_PATH=/usr/lib64
-export LD_LIBRARY_PATH=/usr/lib64
+%define gccpath gcc-12.1.0
+%define gcc_target x86_64-generic-linux
 
-./configure \
+export CPATH=/usr/include
+export LIBRARY_PATH=%{_libdir}
+
+if [ ! -d "../gcc-build" ]; then
+    mkdir ../gcc-build;
+fi
+
+pushd ../gcc-build
+../%{gccpath}/configure \
     --build=x86_64-generic-linux \
     --target=x86_64-generic-linux \
     --disable-libmpx \
@@ -18,7 +25,7 @@ export LD_LIBRARY_PATH=/usr/lib64
     --disable-default-pie \
     --enable-gnu-indirect-function \
     --enable-host-shared \
-    --enable-languages="c,c++,jit" \
+    --enable-languages="c,c++,fortran,go,jit" \
     --enable-ld=default \
     --enable-libstdcxx-pch \
     --enable-linker-build-id \
@@ -34,13 +41,14 @@ export LD_LIBRARY_PATH=/usr/lib64
     --libdir=/usr/lib64 \
     --libexecdir=/usr/lib64 \
     --prefix=/usr \
-    --with-arch=skylake \
     --with-gcc-major-version-only \
     --with-glibc-version=2.35 \
     --with-gnu-ld \
     --with-isl \
-    --with-pkgversion='Clear Linux OS for Intel Architecture'\
+    --with-pkgversion='Clear Linux OS for Intel Architecture' \
     --with-ppl=yes \
     --with-system-zlib \
-    --with-tune=skylake \
+    --with-arch=native \
+    --with-tune=native \
+    --enable-cxx-flags="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -Wl,--emit-relocs -mno-vzeroupper -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -floop-nest-optimize -floop-block -fno-semantic-interposition -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline" \
     --with-zstd
