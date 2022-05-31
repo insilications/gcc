@@ -5,12 +5,12 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 12.1.0
-Release  : 2582
+Release  : 2587
 URL      : file:///insilications/apps/gcc-12.1.0.tar.gz
 Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
-Summary  : No detailed summary available
+Summary  : zlib compression library
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0-with-GCC-exception GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+
+License  : BSD-3-Clause GPL-2.0 GPL-2.0-with-GCC-exception GPL-3.0 GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+ LGPL-2.1 bzip2-1.0.6
 Requires: gcc-doc
 Requires: gcc-libubsan
 Provides: cpp
@@ -29,6 +29,7 @@ BuildRequires : binutils-dev
 BuildRequires : binutils-extras
 BuildRequires : bison
 BuildRequires : buildreq-configure
+BuildRequires : buildreq-golang
 BuildRequires : dejagnu
 BuildRequires : docbook-utils
 BuildRequires : docbook-xml
@@ -93,7 +94,11 @@ Patch8: 0001-Always-use-z-now-when-linking-with-pie.patch
 Patch9: tune-inline.patch
 
 %description
-No detailed description available
+This directory contains the GNU Compiler Collection (GCC).
+The GNU Compiler Collection is free software.  See the files whose
+names start with COPYING for copying permission.  The manuals, and
+some of the runtime libraries, are under different terms; see the
+individual source files for details.
 
 %prep
 %setup -q -n gcc-12.1.0
@@ -114,7 +119,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1653976619
+export SOURCE_DATE_EPOCH=1653983523
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -122,20 +127,20 @@ export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
-export CFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export ASMFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FCFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export LDFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
 export MAKEFLAGS=%{?_smp_mflags}
-%global _lto_cflags 1
+%global _lto_cflags %{nil}
 %global _disable_maintainer_mode 1
 export CCACHE_DISABLE=true
 export CCACHE_NOHASHDIR=true
@@ -144,10 +149,10 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros,locale,file_stat_matches,file_s
 export CCACHE_DIR=/var/tmp/ccache
 export CCACHE_BASEDIR=/builddir/build/BUILD
 export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-export LD_LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-export LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
+export CPATH=/usr/include
+export LIBRARY_PATH=/usr/lib64
+export LD_LIBRARY_PATH=/usr/lib64
 export PATH="/usr/lib64/ccache/bin:/usr/local/cuda/bin:/usr/local/nvidia/bin:/usr/bin/haswell:/usr/bin:/usr/sbin"
-export CPATH="/usr/include:/usr/local/cuda/include"
 export DISPLAY=:0
 export __GL_SYNC_TO_VBLANK=1
 export __GL_SYNC_DISPLAY_DEVICE=HDMI-0
@@ -183,16 +188,13 @@ export QT_FONT_DPI=88
 export GTK_USE_PORTAL=1
 export DESKTOP_SESSION=plasma
 ## altflags1f end
-%define gcc_target x86_64-generic-linux
-%define gccpath gcc-12.1.0
+export CPATH=/usr/include
+export LIBRARY_PATH=/usr/lib64
+export LD_LIBRARY_PATH=/usr/lib64
 
-if [ ! -d "../gcc-build" ]; then
-    mkdir ../gcc-build;
-fi
-
-pushd ../gcc-build
-../%{gccpath}/configure \
-    --build=%{gcc_target} \
+./configure \
+    --build=x86_64-generic-linux \
+    --target=x86_64-generic-linux \
     --disable-libmpx \
     --disable-libunwind-exceptions \
     --disable-multiarch \
@@ -206,7 +208,7 @@ pushd ../gcc-build
     --disable-default-pie \
     --enable-gnu-indirect-function \
     --enable-host-shared \
-    --enable-languages="c,c++,fortran,go,jit" \
+    --enable-languages="c,c++,jit" \
     --enable-ld=default \
     --enable-libstdcxx-pch \
     --enable-linker-build-id \
@@ -222,8 +224,7 @@ pushd ../gcc-build
     --libdir=/usr/lib64 \
     --libexecdir=/usr/lib64 \
     --prefix=/usr \
-    --target=%{gcc_target}\
-    --with-arch=native \
+    --with-arch=skylake \
     --with-gcc-major-version-only \
     --with-glibc-version=2.35 \
     --with-gnu-ld \
@@ -231,11 +232,10 @@ pushd ../gcc-build
     --with-pkgversion='Clear Linux OS for Intel Architecture'\
     --with-ppl=yes \
     --with-system-zlib \
-    --with-tune=native \
-    --with-zstd \
-    --enable-cxx-flags="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+    --with-tune=skylake \
+    --with-zstd
 ## make_macro content
-make -j16 V=1 VERBOSE=1
+make -j12 V=1 VERBOSE=1
 
 # Work around libstdc++'s use of weak symbols to libpthread in static
 # mode: libpthread doesn't get pulled in and therefore we get crashes
@@ -245,7 +245,7 @@ make -j16 V=1 VERBOSE=1
 #  https://sourceware.org/bugzilla/show_bug.cgi?id=5784
 #  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=78017
 #  (and more)
-for dir in ../gcc-build/x86_64-generic-linux/{,32}; do
+for dir in ../x86_64-generic-linux/{,32}; do
     for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
         pushd $dir/$lib
         # Save any shared libraries
@@ -271,7 +271,7 @@ done
 
 
 %install
-export SOURCE_DATE_EPOCH=1653976619
+export SOURCE_DATE_EPOCH=1653983523
 rm -rf %{buildroot}
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -280,20 +280,20 @@ export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
-export CFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export ASMFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FCFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export LDFLAGS="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export CXXFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
-export FFLAGS_FOR_TARGET="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-DNDEBUG -fno-lto -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=skylake -mtune=skylake -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-plt -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
 export NM=/usr/bin/gcc-nm
 export MAKEFLAGS=%{?_smp_mflags}
-%global _lto_cflags 1
+%global _lto_cflags %{nil}
 %global _disable_maintainer_mode 1
 export CCACHE_DISABLE=true
 export CCACHE_NOHASHDIR=true
@@ -302,10 +302,10 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros,locale,file_stat_matches,file_s
 export CCACHE_DIR=/var/tmp/ccache
 export CCACHE_BASEDIR=/builddir/build/BUILD
 export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/usr/share/pkgconfig"
-export LD_LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
-export LIBRARY_PATH="/usr/local/nvidia/lib64:/usr/local/nvidia/lib64/gbm:/usr/local/nvidia/lib64/vdpau:/usr/local/nvidia/lib64/xorg/modules/drivers:/usr/local/nvidia/lib64/xorg/modules/extensions:/usr/local/cuda/lib64:/usr/lib64/haswell:/usr/lib64/dri:/usr/lib64:/usr/lib:/aot/intel/oneapi/compiler/latest/linux/compiler/lib/intel64_lin:/aot/intel/oneapi/compiler/latest/linux/lib:/aot/intel/oneapi/mkl/latest/lib/intel64:/aot/intel/oneapi/tbb/latest/lib/intel64/gcc4.8:/usr/share:/usr/lib64/wine:/usr/local/nvidia/lib32:/usr/local/nvidia/lib32/vdpau:/usr/lib32:/usr/lib32/wine"
+export CPATH=/usr/include
+export LIBRARY_PATH=/usr/lib64
+export LD_LIBRARY_PATH=/usr/lib64
 export PATH="/usr/lib64/ccache/bin:/usr/local/cuda/bin:/usr/local/nvidia/bin:/usr/bin/haswell:/usr/bin:/usr/sbin"
-export CPATH="/usr/include:/usr/local/cuda/include"
 export DISPLAY=:0
 export __GL_SYNC_TO_VBLANK=1
 export __GL_SYNC_DISPLAY_DEVICE=HDMI-0
@@ -342,30 +342,29 @@ export GTK_USE_PORTAL=1
 export DESKTOP_SESSION=plasma
 ## altflags1f end
 ## install_macro start
-pushd ../gcc-build
 %make_install
 cd -
 
-mkdir -p %{buildroot}-v3/usr/libexec/gccgo/bin
-rm -f %{buildroot}-v3/usr/bin/go
-rm -f %{buildroot}-v3/usr/bin/gofmt
-mkdir -p %{buildroot}-v4/usr/libexec/gccgo/bin
-rm -f %{buildroot}-v4/usr/bin/go
-rm -f %{buildroot}-v4/usr/bin/gofmt
+mkdir -p %{buildroot}-v3/usr/libexec/gccgo/bin || :
+rm -f %{buildroot}-v3/usr/bin/go || :
+rm -f %{buildroot}-v3/usr/bin/gofmt || :
+mkdir -p %{buildroot}-v4/usr/libexec/gccgo/bin || :
+rm -f %{buildroot}-v4/usr/bin/go || :
+rm -f %{buildroot}-v4/usr/bin/gofmt || :
 
 
-cd %{buildroot}/usr/bin
-if [ -e %{gcc_target}-g77 ]; then
-    ln -sf %{gcc_target}-g77 g77 || true
-    ln -sf g77 f77 || true
-fi
-if [ -e x86_64-generic-linux-gfortran ]; then
-    ln -sf %{gcc_target}-gfortran gfortran || true
-    ln -sf gfortran f95 || true
-fi
-ln -sf %{gcc_target}-g++ g++
-ln -sf %{gcc_target}-gcc gcc
-#ln -sf %{gcc_target}-cpp cpp
+# cd %{buildroot}/usr/bin
+# if [ -e x86_64-generic-linux-g77 ]; then
+#     ln -sf x86_64-generic-linux-g77 g77 || true
+#     ln -sf g77 f77 || true
+# fi
+# if [ -e x86_64-generic-linux-gfortran ]; then
+#     ln -sf x86_64-generic-linux-gfortran gfortran || true
+#     ln -sf gfortran f95 || true
+# fi
+ln -sf x86_64-generic-linux-g++ g++
+ln -sf x86_64-generic-linux-gcc gcc
+#ln -sf x86_64-generic-linux-cpp cpp
 install -d %{buildroot}/usr/lib
 ln -sf ../bin/cpp %{buildroot}/usr/lib/cpp
 ln -sf g++ c++
@@ -374,9 +373,9 @@ cd -
 
 # This conflicts with golang, stash away
 # We use gccgo to build golang
-mkdir -p %{buildroot}/usr/libexec/gccgo/bin
-mv %{buildroot}/usr/bin/go %{buildroot}/usr/libexec/gccgo/bin
-mv %{buildroot}/usr/bin/gofmt %{buildroot}/usr/libexec/gccgo/bin
+# mkdir -p %{buildroot}/usr/libexec/gccgo/bin
+# mv %{buildroot}/usr/bin/go %{buildroot}/usr/libexec/gccgo/bin
+# mv %{buildroot}/usr/bin/gofmt %{buildroot}/usr/libexec/gccgo/bin
 
 find %{buildroot}/usr/ -name libiberty.a | xargs rm -f
 find %{buildroot}/usr/ -name libiberty.h | xargs rm -f

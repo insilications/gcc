@@ -1,13 +1,10 @@
-%define gcc_target x86_64-generic-linux
-%define gccpath gcc-12.1.0
+export CPATH=/usr/include
+export LIBRARY_PATH=/usr/lib64
+export LD_LIBRARY_PATH=/usr/lib64
 
-if [ ! -d "../gcc-build" ]; then
-    mkdir ../gcc-build;
-fi
-
-pushd ../gcc-build
-../%{gccpath}/configure \
-    --build=%{gcc_target} \
+./configure \
+    --build=x86_64-generic-linux \
+    --target=x86_64-generic-linux \
     --disable-libmpx \
     --disable-libunwind-exceptions \
     --disable-multiarch \
@@ -37,8 +34,7 @@ pushd ../gcc-build
     --libdir=/usr/lib64 \
     --libexecdir=/usr/lib64 \
     --prefix=/usr \
-    --target=%{gcc_target}\
-    --with-arch=native \
+    --with-arch=skylake \
     --with-gcc-major-version-only \
     --with-glibc-version=2.35 \
     --with-gnu-ld \
@@ -46,6 +42,5 @@ pushd ../gcc-build
     --with-pkgversion='Clear Linux OS for Intel Architecture'\
     --with-ppl=yes \
     --with-system-zlib \
-    --with-tune=native \
-    --with-zstd \
-    --enable-cxx-flags="-DNDEBUG -ggdb3 -ggnu-pubnames -O3 -Wl,--emit-relocs -mno-vzeroupper --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -Wno-error -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -feliminate-unused-debug-symbols -feliminate-unused-debug-types -flive-range-shrinkage -fno-lto -fno-plt -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fomit-frame-pointer -static-libstdc++ -static-libgcc -mrelax-cmpxchg-loop -fexceptions -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+    --with-tune=skylake \
+    --with-zstd

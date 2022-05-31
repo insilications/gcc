@@ -1,4 +1,3 @@
-gcc-stable-branch.patch
 optimize.patch
 vectorize.patch
 gomp-relax.patch
