@@ -15,6 +15,7 @@ pushd ../gcc-build
     --disable-libmpx \
     --disable-libunwind-exceptions \
     --disable-multiarch \
+    --enable-multilib \
     --disable-vtable-verify \
     --disable-werror \
     --disable-bootstrap \
@@ -23,7 +24,7 @@ pushd ../gcc-build
     --enable-clocale=gnu \
     --enable-__cxa_atexit \
     --disable-default-pie \
-    --disable-gnu-indirect-function \
+    --enable-gnu-indirect-function \
     --enable-host-shared \
     --enable-languages="c,c++,fortran,go,jit" \
     --enable-ld=default \
@@ -32,7 +33,6 @@ pushd ../gcc-build
     --enable-linux-futex \
     --enable-lto \
     --with-pic \
-    --enable-multilib \
     --enable-plugin \
     --enable-shared \
     --enable-threads=posix \
@@ -50,5 +50,6 @@ pushd ../gcc-build
     --with-system-zlib \
     --with-arch=native \
     --with-tune=native \
-    --enable-cxx-flags="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000,-z,separate-code -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline" \
+    --with-static-standard-libraries \
+    --enable-cxx-flags="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline" \
     --with-zstd
