@@ -274,7 +274,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1654525827
+export SOURCE_DATE_EPOCH=1654526339
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -394,7 +394,7 @@ done
 
 
 %install
-export SOURCE_DATE_EPOCH=1654525827
+export SOURCE_DATE_EPOCH=1654526339
 rm -rf %{buildroot}
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -508,10 +508,12 @@ popd
 (cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-generic-linux/*/32/*.[ao])
 ## install_macro end
 ## custom find_lang start
-%find_lang cpplib cpp.lang
-%find_lang gcc tmp.lang
-%find_lang libstdc++ cxx.lang
+%find_lang cpplib
+%find_lang gcc
+%find_lang libstdc++
+mv gcc.lang tmp.find_lang
 cat *.lang > gcc.lang
+rm tmp.find_lang
 ## custom find_lang end
 
 %files
