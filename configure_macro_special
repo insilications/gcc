@@ -4,7 +4,7 @@
 export CPATH=/usr/include
 export LIBRARY_PATH=%{_libdir}
 
-if [ ! -d "../gcc-build" ]; then
+if [ ! -d "../gcc-build-shared" ]; then
     mkdir ../gcc-build;
 fi
 
