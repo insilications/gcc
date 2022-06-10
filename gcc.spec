@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 12.1.0
-Release  : 2603
+Release  : 2605
 URL      : file:///insilications/apps/gcc-12.1.0.tar.gz
 Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
 Summary  : zlib compression library
@@ -120,10 +120,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1654858318
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
+export SOURCE_DATE_EPOCH=1654858943
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -240,9 +237,6 @@ done
 ## make_macro end
 
 pushd ../build-special/
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -360,11 +354,8 @@ done
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1654858318
+export SOURCE_DATE_EPOCH=1654858943
 rm -rf %{buildroot}
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -387,12 +378,17 @@ export CPATH=/usr/include
 export LIBRARY_PATH=%{_libdir}
 export PATH="/usr/bin/haswell:/usr/bin:/usr/sbin"
 ## altflags1f end
+## install_macro_build_special start
 pushd ../build-special/
-%make_install_special
+
+%define gccpath gcc-12.1.0
+%define gcc_target x86_64-generic-linux
+
+pushd ../gcc-build
+%make_install
+
 popd
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
+## install_macro_build_special end
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
