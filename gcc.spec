@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 12.1.0
-Release  : 2601
+Release  : 2603
 URL      : file:///insilications/apps/gcc-12.1.0.tar.gz
 Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
 Summary  : zlib compression library
@@ -110,6 +110,9 @@ cd %{_builddir}/gcc-12.1.0
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+pushd %{_builddir}
+cp -a %{_builddir}/gcc-12.1.0 build-special
+popd
 
 %build
 unset http_proxy
@@ -117,7 +120,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1654856194
+export SOURCE_DATE_EPOCH=1654858318
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -236,10 +239,157 @@ for dir in ../gcc-build/x86_64-generic-linux/{,32}; do
 done
 ## make_macro end
 
+pushd ../build-special/
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+## altflags1f content
+## altflags1
+unset ASFLAGS
+export CFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export AR=/usr/bin/gcc-ar
+export RANLIB=/usr/bin/gcc-ranlib
+export NM=/usr/bin/gcc-nm
+%global _lto_cflags %{nil}
+%global _disable_maintainer_mode 1
+export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/usr/share/pkgconfig"
+export CPATH=/usr/include
+export LIBRARY_PATH=%{_libdir}
+export PATH="/usr/bin/haswell:/usr/bin:/usr/sbin"
+## altflags1f end
+%define gccpath gcc-12.1.0
+%define gcc_target x86_64-generic-linux
+
+export CPATH=/usr/include
+export LIBRARY_PATH=%{_libdir}
+
+if [ ! -d "../gcc-build" ]; then
+    mkdir ../gcc-build;
+fi
+
+pushd ../gcc-build
+../%{gccpath}/configure \
+    --build=x86_64-generic-linux \
+    --target=x86_64-generic-linux \
+    --disable-libmpx \
+    --disable-libunwind-exceptions \
+    --disable-multiarch \
+    --enable-multilib \
+    --disable-vtable-verify \
+    --disable-werror \
+    --disable-bootstrap \
+    --disable-cet \
+    --disable-default-ssp \
+    --enable-clocale=gnu \
+    --enable-__cxa_atexit \
+    --disable-default-pie \
+    --enable-gnu-indirect-function \
+    --enable-host-shared \
+    --enable-languages="c,c++" \
+    --enable-ld=default \
+    --enable-libstdcxx-pch \
+    --enable-linker-build-id \
+    --enable-linux-futex \
+    --enable-lto \
+    --with-pic \
+    --enable-plugin \
+    --enable-shared \
+    --enable-threads=posix \
+    --exec-prefix=/usr \
+    --includedir=/usr/include \
+    --libdir=/usr/lib64 \
+    --libexecdir=/usr/lib64 \
+    --prefix=/usr \
+    --with-gcc-major-version-only \
+    --with-glibc-version=2.35 \
+    --with-gnu-ld \
+    --with-isl \
+    --with-pkgversion='Clear Linux OS for Intel Architecture' \
+    --with-ppl=yes \
+    --with-system-zlib \
+    --with-arch=native \
+    --with-tune=native \
+    --with-static-standard-libraries \
+    --enable-cxx-flags="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mrelax-cmpxchg-loop -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fomit-frame-pointer -mrelax-cmpxchg-loop -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline" \
+    --with-zstd
+## make_macro_special content
+# special
+
+make -O -j15 V=1
+
+popd
+
+# Work around libstdc++'s use of weak symbols to libpthread in static
+# mode: libpthread doesn't get pulled in and therefore we get crashes
+# due to the calls being resolved to address 0x0.
+# We rebuild the .a without weak symbols.
+# See:
+#  https://sourceware.org/bugzilla/show_bug.cgi?id=5784
+#  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=78017
+#  (and more)
+for dir in ../gcc-build/x86_64-generic-linux/{,32}; do
+    for lib in libstdc++-v3/libsupc++ libstdc++-v3/src; do
+        pushd $dir/$lib
+        # Save any shared libraries
+        mv .libs saved.libs || :
+        rename lib savedlib lib*.so.* || :
+
+        make clean
+        make -O -j14 CPPFLAGS="-D_GLIBCXX_GTHREAD_USE_WEAK=0" LIBGCC2_DEBUG_CFLAGS="-g3 -DGTHREAD_USE_WEAK=0 -fvisibility-inlines-hidden -fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+
+        # Restore the saved shared libraries (if any)
+        rename savedlib lib savedlib* || :
+        if [ -d saved.libs ]; then
+            mv saved.libs/*.so.* .libs || :
+        fi
+
+        # Update timestamps so make install won't recreate
+        find -name '*.so*' | xargs -rt touch -r `find -name '*.a' | head -1`
+        popd
+    done
+done
+## make_macro_special end
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1654856194
+export SOURCE_DATE_EPOCH=1654858318
 rm -rf %{buildroot}
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+## altflags1f content
+## altflags1
+unset ASFLAGS
+export CFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export ASMFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FCFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export LDFLAGS="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export CXXFLAGS_FOR_TARGET="-fvisibility-inlines-hidden -fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export FFLAGS_FOR_TARGET="-fno-lto -g3 -fPIC -fno-PIE -fno-pie -Wl,--no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -fasynchronous-unwind-tables -funwind-tables -fexceptions -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+export AR=/usr/bin/gcc-ar
+export RANLIB=/usr/bin/gcc-ranlib
+export NM=/usr/bin/gcc-nm
+%global _lto_cflags %{nil}
+%global _disable_maintainer_mode 1
+export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/usr/share/pkgconfig"
+export CPATH=/usr/include
+export LIBRARY_PATH=%{_libdir}
+export PATH="/usr/bin/haswell:/usr/bin:/usr/sbin"
+## altflags1f end
+pushd ../build-special/
+%make_install_special
+popd
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm

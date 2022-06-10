@@ -1,0 +1,9 @@
+pushd ../build-special/
+
+%define gccpath gcc-12.1.0
+%define gcc_target x86_64-generic-linux
+
+pushd ../gcc-build
+%make_install
+
+popd
