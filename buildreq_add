@@ -55,3 +55,6 @@ zlib-dev
 zlib-dev32
 zlib-staticdev
 zstd-dev
+zstd-dev32
+zstd-staticdev
+
