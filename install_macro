@@ -1,5 +1,5 @@
 %define gccpath gcc-12.1.0
-%define gcc_target x86_64-generic-linux
+%define gcc_target x86_64-pc-linux-gnu
 
 pushd ../gcc-build
 %make_install
@@ -20,17 +20,17 @@ fi
 cd -
 
 cd %{buildroot}/usr/bin
-if [ -e %{gcc_target}-g77 ]; then
-    ln -sf %{gcc_target}-g77 g77 || true
+if [ -e x86_64-pc-linux-gnu-g77 ]; then
+    ln -sf x86_64-pc-linux-gnu-g77 g77 || true
     ln -sf g77 f77 || true
 fi
-if [ -e x86_64-generic-linux-gfortran ]; then
-    ln -sf %{gcc_target}-gfortran gfortran || true
+if [ -e x86_64-pc-linux-gnu-gfortran ]; then
+    ln -sf x86_64-pc-linux-gnu-gfortran gfortran || true
     ln -sf gfortran f95 || true
 fi
-ln -sf %{gcc_target}-g++ g++
-ln -sf %{gcc_target}-gcc gcc
-#ln -sf %{gcc_target}-cpp cpp
+ln -sf x86_64-pc-linux-gnu-g++ g++
+ln -sf x86_64-pc-linux-gnu-gcc gcc
+#ln -sf x86_64-pc-linux-gnu-cpp cpp
 install -d %{buildroot}/usr/lib
 ln -sf ../bin/cpp %{buildroot}/usr/lib/cpp
 ln -sf g++ c++
@@ -39,9 +39,9 @@ cd -
 
 # This conflicts with golang, stash away
 # We use gccgo to build golang
-mkdir -p %{buildroot}/usr/libexec/gccgo/bin
-mv %{buildroot}/usr/bin/go %{buildroot}/usr/libexec/gccgo/bin
-mv %{buildroot}/usr/bin/gofmt %{buildroot}/usr/libexec/gccgo/bin
+# mkdir -p %{buildroot}/usr/libexec/gccgo/bin
+# mv %{buildroot}/usr/bin/go %{buildroot}/usr/libexec/gccgo/bin
+# mv %{buildroot}/usr/bin/gofmt %{buildroot}/usr/libexec/gccgo/bin
 
 find %{buildroot}/usr/ -name libiberty.a | xargs rm -f
 find %{buildroot}/usr/ -name libiberty.h | xargs rm -f
@@ -61,7 +61,7 @@ mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/aut
 mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
 
 # merge the two C++ include trees (needed for Clang)
-pushd %{buildroot}/usr/include/c++/*/x86_64-generic-linux
+pushd %{buildroot}/usr/include/c++/*/x86_64-pc-linux-gnu
 find -type f \! -path ./32/\* | while read f; do
     cmp -s $f 32/$f && continue
     (
@@ -80,5 +80,5 @@ done
 popd
 
 # Also clang compat
-(cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-generic-linux/*/*.[ao])
-(cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-generic-linux/*/32/*.[ao])
+(cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-pc-linux-gnu/*/*.[ao])
+(cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-pc-linux-gnu/*/32/*.[ao])

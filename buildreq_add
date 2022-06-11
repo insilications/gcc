@@ -57,4 +57,16 @@ zlib-staticdev
 zstd-dev
 zstd-dev32
 zstd-staticdev
+glibc-bin
+glibc-dev
+glibc-dev32
+glibc-doc
+glibc-extras
+glibc-lib-avx2
+glibc-libc32
+glibc-locale
+glibc-nscd
+glibc-staticdev
+glibc-utils
+libc6
 

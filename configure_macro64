@@ -1,8 +1,5 @@
 %define gccpath gcc-12.1.0
-%define gcc_target x86_64-generic-linux
-
-export CPATH=/usr/include
-export LIBRARY_PATH=%{_libdir}
+%define gcc_target x86_64-pc-linux-gnu
 
 if [ ! -d "../gcc-build" ]; then
     mkdir ../gcc-build;
@@ -15,8 +12,6 @@ pushd ../gcc-build
     --libdir=/usr/lib64 \
     --libexecdir=/usr/lib64 \
     --prefix=/usr \
-    --build=x86_64-generic-linux \
-    --target=x86_64-generic-linux \
     --disable-libmpx \
     --disable-libunwind-exceptions \
     --disable-multiarch \
@@ -26,29 +21,28 @@ pushd ../gcc-build
     --disable-bootstrap \
     --disable-cet \
     --disable-default-ssp \
-    --disable-host-shared \
     --enable-multilib \
     --enable-clocale=gnu \
     --enable-__cxa_atexit \
     --enable-gnu-indirect-function \
-    --enable-languages="c,c++,fortran,go" \
-    --enable-ld=yes \
+    --enable-languages="c,c++,fortran" \
+    --enable-ld=default \
     --enable-libstdcxx-pch \
     --enable-linker-build-id \
     --enable-linux-futex \
     --enable-lto \
     --enable-plugin \
     --enable-shared \
-    --enable-static \
     --enable-threads=posix \
+    --with-pkgversion='Clear Linux OS for Intel Architecture' \
+    --with-pic \
     --with-gcc-major-version-only \
     --with-glibc-version=2.35 \
     --with-gnu-ld \
     --with-isl \
-    --with-pkgversion='Clear Linux OS for Intel Architecture' \
     --with-ppl=yes \
     --with-system-zlib \
     --with-arch=native \
     --with-tune=native \
-    --with-zstd \
-    --enable-cxx-flags="-fvisibility-inlines-hidden -fno-lto -Wa,-mrelax-relocations=yes -g3 -grecord-gcc-switches -gdescribe-dies -fno-PIE -fno-pie -Wl,-no-pie -no-pie -O3 -mno-vzeroupper -march=native -mtune=native -mavx -mavx2 -msse2avx -Wall -Wl,--as-needed -Wl,-O2 -Wl,-z,now,-z,relro,-z,max-page-size=0x1000 -mprefer-vector-width=256 -falign-functions=32 -floop-nest-optimize -floop-block -fno-semantic-interposition -Wl,-Bsymbolic-functions -fno-plt -fno-stack-protector -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-slp-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -flive-range-shrinkage -Wp,-D_REENTRANT -pipe -ffat-lto-objects -pthread -Wl,--build-id=sha1 -fno-reorder-blocks-and-partition -Wl,--emit-relocs -Wno-inline"
+    --with-static-standard-libraries=auto \
+    --with-zstd
