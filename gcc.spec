@@ -11,7 +11,6 @@ Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0-with-GCC-exception GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Requires: gcc-libgcc32 = %{version}-%{release}
 Requires: gcc-libs-math = %{version}-%{release}
@@ -115,15 +114,6 @@ Patch8: 0008-tune-inline.patch
 %description
 No detailed description available
 
-%package bin
-Summary: bin components for the gcc package.
-Group: Binaries
-Requires: gcc-data = %{version}-%{release}
-
-%description bin
-bin components for the gcc package.
-
-
 %package data
 Summary: data components for the gcc package.
 Group: Data
@@ -135,7 +125,6 @@ data components for the gcc package.
 %package dev
 Summary: dev components for the gcc package.
 Group: Development
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Provides: gcc-devel = %{version}-%{release}
 Requires: gcc = %{version}-%{release}
@@ -157,7 +146,6 @@ dev components for the gcc package.
 %package dev32
 Summary: dev32 components for the gcc package.
 Group: Default
-Requires: gcc-bin = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Requires: gcc-dev = %{version}-%{release}
 
@@ -205,15 +193,6 @@ Group: Default
 locale components for the gcc package.
 
 
-%package staticdev
-Summary: staticdev components for the gcc package.
-Group: Default
-Requires: gcc-dev = %{version}-%{release}
-
-%description staticdev
-staticdev components for the gcc package.
-
-
 %package -n gcc-doc
 Summary: gcc-doc components for the gcc package.
 Group: Default
@@ -259,7 +238,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1655122632
+export SOURCE_DATE_EPOCH=1655124154
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -373,7 +352,7 @@ echo "END REBUILD libstdc++"
 
 
 %install
-export SOURCE_DATE_EPOCH=1655122632
+export SOURCE_DATE_EPOCH=1655124154
 rm -rf %{buildroot}
 ## altflags1f content
 ## altflags1
@@ -508,6 +487,14 @@ rm tmp.lang
 /usr/bin/gcov-tool
 /usr/bin/gfortran
 /usr/bin/lto-dump
+/usr/bin/x86_64-pc-linux-gnu-c++
+/usr/bin/x86_64-pc-linux-gnu-g++
+/usr/bin/x86_64-pc-linux-gnu-gcc
+/usr/bin/x86_64-pc-linux-gnu-gcc-12
+/usr/bin/x86_64-pc-linux-gnu-gcc-ar
+/usr/bin/x86_64-pc-linux-gnu-gcc-nm
+/usr/bin/x86_64-pc-linux-gnu-gcc-ranlib
+/usr/bin/x86_64-pc-linux-gnu-gfortran
 /usr/lib/cpp
 /usr/lib64/crtbegin.o
 /usr/lib64/crtbeginS.o
@@ -518,6 +505,102 @@ rm tmp.lang
 /usr/lib64/crtprec32.o
 /usr/lib64/crtprec64.o
 /usr/lib64/crtprec80.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/cc1
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/cc1plus
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/collect2
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbegin.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbeginS.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbeginT.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtend.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtendS.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtfastmath.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec32.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec64.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec80.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/f951
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_arithmetic.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_exceptions.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_features.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.f90
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib_kinds.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc.f90
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc_kinds.mod
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc_lib.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/g++-mapper-server
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/README
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/limits.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/pthread.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/syslimits.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixinc.sh
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixinc_list
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixincl
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/gsyslimits.h
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/include/README
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/macro_list
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkheaders
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkheaders.conf
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkinstalldirs
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libcaf_single.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libcaf_single.la
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcc.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcc_eh.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcov.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.so
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/lto-wrapper
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/lto1
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/gtype.state
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ada/gcc-interface/ada-tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/all-tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/b-header-vars
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtin-attrs.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtin-types.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtins.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-family/c-common.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfg-flags.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cif-code.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/i386-isa.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/stringop.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/x86-tune.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/coroutine-builtins.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/cp-tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/operators.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/d/d-tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dbgcnt.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcov-counter.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gsstruct.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gtm-builtins.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/insn-notes.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/internal-fn.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/machmode.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/mode-classes.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/objc/objc-tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/omp-builtins.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/pass-instances.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/passes.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/plugin.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/predict.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/reg-notes.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sanitizer.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/stab.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sync-builtins.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target-insns.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/timevar.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/treestruct.def
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so.0
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so.0.0.0
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so.0
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so.0.0.0
 /usr/lib64/libasan.a
 /usr/lib64/libasan_preinit.o
 /usr/lib64/libatomic.a
@@ -543,17 +626,6 @@ rm tmp.lang
 /usr/lib64/libtsan.a
 /usr/lib64/libtsan_preinit.o
 /usr/lib64/libubsan.a
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/x86_64-pc-linux-gnu-c++
-/usr/bin/x86_64-pc-linux-gnu-g++
-/usr/bin/x86_64-pc-linux-gnu-gcc
-/usr/bin/x86_64-pc-linux-gnu-gcc-12
-/usr/bin/x86_64-pc-linux-gnu-gcc-ar
-/usr/bin/x86_64-pc-linux-gnu-gcc-nm
-/usr/bin/x86_64-pc-linux-gnu-gcc-ranlib
-/usr/bin/x86_64-pc-linux-gnu-gfortran
 
 %files data
 %defattr(-,root,root,-)
@@ -1373,15 +1445,6 @@ rm tmp.lang
 /usr/include/c++/12/x86_64-pc-linux-gnu/bits/stdtr1c++.h
 /usr/include/c++/12/x86_64-pc-linux-gnu/bits/time_members.h
 /usr/include/c++/12/x86_64-pc-linux-gnu/ext/opt_random.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbegin.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbeginS.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbeginT.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtend.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtendS.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtfastmath.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec32.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec64.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec80.o
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/finclude/ieee_arithmetic.mod
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/finclude/ieee_exceptions.mod
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/finclude/ieee_features.mod
@@ -1394,35 +1457,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/finclude/openacc_kinds.mod
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/finclude/openacc_lib.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libcaf_single.la
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/cc1
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/cc1plus
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/collect2
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbegin.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbeginS.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtbeginT.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtend.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtendS.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtfastmath.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec32.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec64.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/crtprec80.o
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/f951
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_arithmetic.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_exceptions.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/ieee_features.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.f90
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/omp_lib_kinds.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc.f90
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc_kinds.mod
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/finclude/openacc_lib.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/g++-mapper-server
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/README
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/limits.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/pthread.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/include-fixed/syslimits.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/ISO_Fortran_binding.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/acc_prof.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/adxintrin.h
@@ -1548,28 +1582,12 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/xsaveoptintrin.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/xsavesintrin.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/include/xtestintrin.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixinc.sh
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixinc_list
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/fixincl
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/gsyslimits.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/include/README
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/include/limits.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/macro_list
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkheaders
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkheaders.conf
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/install-tools/mkinstalldirs
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libcaf_single.la
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.la
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/liblto_plugin.so
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/lto-wrapper
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/lto1
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/gengtype
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/gtype.state
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ada/gcc-interface/ada-tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/addresses.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/alias.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/align.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/all-tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/alloc-pool.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ansidecl.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/array-traits.h
@@ -1578,17 +1596,12 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/attribs.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/auto-host.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/auto-profile.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/b-header-vars
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/backend.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/basic-block.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/bb-reorder.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/bitmap.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtin-attrs.def
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtin-types.def
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtins.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/builtins.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/bversion.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-family/c-common.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-family/c-common.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-family/c-objc.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-family/c-pragma.h
@@ -1596,7 +1609,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/c-tree.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/calls.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ccmp.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfg-flags.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfg.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfganal.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfgbuild.h
@@ -1607,7 +1619,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfgloopmanip.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cfgrtl.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cgraph.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cif-code.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/collect-utils.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/collect2-aix.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/collect2.h
@@ -1623,16 +1634,13 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/biarch64.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/gnu-user-common.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/gnu-user64.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/i386-isa.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/i386-opts.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/i386-protos.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/i386.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/linux-common.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/linux64.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/stringop.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/unix.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/x86-64.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/i386/x86-tune.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/initfini-array.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/linux-android.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/config/linux-protos.h
@@ -1642,22 +1650,17 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/context.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/convert.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/coretypes.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/coroutine-builtins.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/coverage.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/cp-tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/cp-tree.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/cxx-pretty-print.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/name-lookup.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/operators.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cp/type-utils.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cppbuiltin.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cppdefault.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cpplib.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/cselib.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ctfc.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/d/d-tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/data-streamer.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dbgcnt.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dbgcnt.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dbxout.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dce.h
@@ -1673,7 +1676,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic-path.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic-spec.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic-url.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/diagnostic.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/digraph.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/dojump.h
@@ -1709,7 +1711,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcc-rich-location.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcc-symtab.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcc.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcov-counter.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcov-io.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcse-common.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gcse.h
@@ -1742,7 +1743,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple-ssa.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple-streamer.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple-walk.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimple.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimplify-me.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gimplify.h
@@ -1752,11 +1752,9 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/graphds.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/graphite.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/graphviz.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gsstruct.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gstab.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gsyms.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gsyslimits.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gtm-builtins.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/gtype-desc.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/hard-reg-set.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/hash-map-traits.h
@@ -1784,9 +1782,7 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/insn-flags.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/insn-modes-inline.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/insn-modes.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/insn-notes.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/int-vector-builder.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/internal-fn.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/internal-fn.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/intl.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ipa-fnsummary.h
@@ -1820,19 +1816,15 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/lto-compress.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/lto-section-names.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/lto-streamer.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/machmode.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/machmode.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/md5.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/mem-stats-traits.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/mem-stats.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/memmodel.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/memory-block.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/mode-classes.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/mux-utils.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/objc/objc-tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/obstack-utils.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/obstack.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/omp-builtins.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/omp-expand.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/omp-general.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/omp-low.h
@@ -1843,7 +1835,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs-libfuncs.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs-query.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs-tree.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optabs.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optinfo-emit-json.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/optinfo.h
@@ -1852,17 +1843,13 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/opts.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ordered-hash-map.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/output.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/pass-instances.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/pass_manager.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/passes.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/plugin-api.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/plugin-version.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/plugin.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/plugin.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/pointer-query.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/poly-int-types.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/poly-int.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/predict.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/predict.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/prefix.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/pretty-print.h
@@ -1877,7 +1864,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/real.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/realmpfr.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/recog.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/reg-notes.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/regcprop.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/regrename.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/regs.h
@@ -1887,7 +1873,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl-error.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl-iter.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl-ssa.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtl.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtlanal.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtlhash.h
@@ -1895,7 +1880,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/rtx-vector-builder.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/run-rtl-passes.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/safe-ctype.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sanitizer.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sbitmap.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sched-int.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sel-sched-dump.h
@@ -1916,7 +1900,6 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sreal.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ssa-iterators.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/ssa.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/stab.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/statistics.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/stmt.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/stor-layout.h
@@ -1927,16 +1910,12 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/symtab-clones.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/symtab-thunks.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/symtab.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/sync-builtins.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/system.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target-def.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target-globals.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target-hooks-macros.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target-insns.def
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/target.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/targhooks.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/timevar.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/timevar.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tm-preds.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tm.h
@@ -2001,9 +1980,7 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree-vector-builder.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree-vectorizer.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree-vrp.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tree.h
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/treestruct.def
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tristate.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tsan.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/tsystem.h
@@ -2031,13 +2008,7 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/xcoff.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/xcoffout.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.la
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so.0
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.so.0.0.0
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.la
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so.0
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.so.0.0.0
 /usr/lib64/libatomic.la
 /usr/lib64/libatomic.so
 /usr/lib64/libgcc_s.so
@@ -2110,6 +2081,19 @@ rm tmp.lang
 /usr/lib32/libubsan.a
 /usr/lib32/libubsan.la
 /usr/lib32/libubsan.so
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbegin.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbeginS.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtbeginT.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtend.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtendS.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtfastmath.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec32.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec64.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/crtprec80.o
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libcaf_single.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcc.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcc_eh.a
+/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcov.a
 /usr/share/gdb/auto-load/usr/lib32/libstdc++.so.6.0.30-gdb.py
 
 %files libgcc32
@@ -2176,17 +2160,6 @@ rm tmp.lang
 /usr/lib64/libubsan.so
 /usr/lib64/libubsan.so.1
 /usr/lib64/libubsan.so.1.0.0
-
-%files staticdev
-%defattr(-,root,root,-)
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libcaf_single.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcc.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcc_eh.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcov.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libcaf_single.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcc.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcc_eh.a
-/usr/lib64/gcc/x86_64-pc-linux-gnu/12/libgcov.a
 
 %files -n gcc-doc
 %defattr(-,root,root,-)
