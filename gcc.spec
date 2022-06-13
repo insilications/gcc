@@ -259,7 +259,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1655122338
+export SOURCE_DATE_EPOCH=1655122632
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -373,7 +373,7 @@ echo "END REBUILD libstdc++"
 
 
 %install
-export SOURCE_DATE_EPOCH=1655122338
+export SOURCE_DATE_EPOCH=1655122632
 rm -rf %{buildroot}
 ## altflags1f content
 ## altflags1
@@ -488,9 +488,9 @@ popd
 %find_lang cpplib
 %find_lang gcc
 %find_lang libstdc++
-mv gcc.lang tmp.find_lang
+mv gcc.lang tmp.lang
 cat *.lang > gcc.lang
-rm tmp.find_lang
+rm tmp.lang
 ## custom find_lang end
 
 %files
