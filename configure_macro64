@@ -1,11 +1,11 @@
 %define gccpath gcc-12.1.0
 %define gcc_target x86_64-pc-linux-gnu
 
-if [ ! -d "../gcc-build" ]; then
-    mkdir ../gcc-build;
+if [ ! -d "../gcc-build-static" ]; then
+    mkdir ../gcc-build-static;
 fi
 
-pushd ../gcc-build
+pushd ../gcc-build-static
 ../%{gccpath}/configure \
     --exec-prefix=/usr \
     --includedir=/usr/include \
@@ -32,17 +32,17 @@ pushd ../gcc-build
     --enable-linux-futex \
     --enable-lto \
     --enable-plugin \
-    --enable-shared \
+    --disable-shared \
+    --without-pic \
     --enable-threads=posix \
     --with-pkgversion='Clear Linux OS for Intel Architecture' \
-    --with-pic \
     --with-gcc-major-version-only \
     --with-glibc-version=2.35 \
     --with-gnu-ld \
     --with-isl \
     --with-ppl=yes \
     --with-system-zlib \
-    --with-arch=native \
-    --with-tune=native \
-    --with-static-standard-libraries=auto \
+    --with-arch=skylake \
+    --with-tune=skylake \
+    --with-static-standard-libraries=yes \
     --with-zstd

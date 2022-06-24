@@ -3,7 +3,21 @@ pushd ../build-special/
 %define gccpath gcc-12.1.0
 %define gcc_target x86_64-generic-linux
 
-pushd ../gcc-build
+pushd ../gcc-build-shared
 %make_install
 
-popd
+find %{buildroot}/usr/ -name libiberty.a | xargs rm -f
+find %{buildroot}/usr/ -name libiberty.h | xargs rm -f
+chmod 0755 %{buildroot}*/usr/lib64/libgcc_s.so.1
+chmod 0755 %{buildroot}*/usr/lib32/libgcc_s.so.1
+
+chmod a+x %{buildroot}*/usr/bin
+chmod a+x %{buildroot}*/usr/lib64
+find %{buildroot}*/usr/lib64 %{buildroot}/usr/lib*/gcc -name '*.so*' -print0 | xargs -r0 chmod -f 755
+
+
+# This is only for gdb
+mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
+mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
+mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib64/.
+mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.

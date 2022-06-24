@@ -1,7 +1,7 @@
 %define gccpath gcc-12.1.0
 %define gcc_target x86_64-pc-linux-gnu
 
-pushd ../gcc-build
+pushd ../gcc-build-static
 %make_install
 
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -45,20 +45,19 @@ cd -
 
 find %{buildroot}/usr/ -name libiberty.a | xargs rm -f
 find %{buildroot}/usr/ -name libiberty.h | xargs rm -f
-chmod 0755 %{buildroot}*/usr/lib64/libgcc_s.so.1
-chmod 0755 %{buildroot}*/usr/lib32/libgcc_s.so.1
+# chmod 0755 %{buildroot}*/usr/lib64/libgcc_s.so.1
+# chmod 0755 %{buildroot}*/usr/lib32/libgcc_s.so.1
 
 chmod a+x %{buildroot}*/usr/bin
 chmod a+x %{buildroot}*/usr/lib64
-find %{buildroot}*/usr/lib64 %{buildroot}/usr/lib*/gcc -name '*.so*' -print0 | xargs -r0 chmod -f 755
 find %{buildroot}*/usr/lib64 %{buildroot}/usr/lib*/gcc -name '*.o' -print0 | xargs -r0 chmod -f 644
 
 
 # This is only for gdb
-mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
-mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
-mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib64/.
-mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
+# mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
+# mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
+# mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib64/.
+# mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
 
 # merge the two C++ include trees (needed for Clang)
 pushd %{buildroot}/usr/include/c++/*/x86_64-pc-linux-gnu
