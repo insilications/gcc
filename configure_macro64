@@ -6,7 +6,7 @@ if [ ! -d "../gcc-build-static" ]; then
 fi
 
 pushd ../gcc-build-static
-../%{gccpath}/configure \
+../gcc-12.1.0/configure \
     --exec-prefix=/usr \
     --includedir=/usr/include \
     --libdir=/usr/lib64 \
@@ -33,7 +33,7 @@ pushd ../gcc-build-static
     --enable-lto \
     --enable-plugin \
     --disable-shared \
-    --without-pic \
+    --enable-static \
     --enable-threads=posix \
     --with-pkgversion='Clear Linux OS for Intel Architecture' \
     --with-gcc-major-version-only \

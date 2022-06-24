@@ -1,8 +1,4 @@
-pushd ../build-special/
-
-%define gccpath gcc-12.1.0
-%define gcc_target x86_64-generic-linux
-
+# pushd ../build-special
 pushd ../gcc-build-shared
 %make_install
 
@@ -21,3 +17,5 @@ mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib64
 mkdir -p %{buildroot}//usr/share/gdb/auto-load//usr/lib32
 mv %{buildroot}//usr/lib64/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib64/.
 mv %{buildroot}//usr/lib32/libstdc++.so.*-gdb.py %{buildroot}//usr/share/gdb/auto-load//usr/lib32/.
+popd
+popd

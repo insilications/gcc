@@ -1,12 +1,9 @@
-%define gccpath gcc-12.1.0
-%define gcc_target x86_64-pc-linux-gnu
-
 if [ ! -d "../gcc-build-shared" ]; then
     mkdir ../gcc-build-shared;
 fi
 
 pushd ../gcc-build-shared
-../%{gccpath}/configure \
+../build-special/configure \
     --exec-prefix=/usr \
     --includedir=/usr/include \
     --libdir=/usr/lib64 \
@@ -33,7 +30,7 @@ pushd ../gcc-build-shared
     --enable-lto \
     --enable-plugin \
     --enable-shared \
-    --with-pic \
+    --disable-static \
     --enable-threads=posix \
     --with-pkgversion='Clear Linux OS for Intel Architecture' \
     --with-gcc-major-version-only \
