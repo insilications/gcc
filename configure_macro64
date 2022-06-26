@@ -32,7 +32,7 @@ pushd ../gcc-build-static
     --enable-linux-futex \
     --enable-lto \
     --enable-plugin \
-    --disable-shared \
+    --enable-shared \
     --enable-static \
     --enable-threads=posix \
     --with-pkgversion='Clear Linux OS for Intel Architecture' \
