@@ -6,3 +6,4 @@
 0006-Ignore-Werror-if-GCC_IGNORE_WERROR-envvar-set.patch
 0007-Always-use-z-now-when-linking-with-pie.patch
 0008-tune-inline.patch
+x86-always-generate-branch-hint.patch

@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gcc
 Version  : 12.1.0
-Release  : 2618
+Release  : 2620
 URL      : file:///insilications/apps/gcc-12.1.0.tar.gz
 Source0  : file:///insilications/apps/gcc-12.1.0.tar.gz
 Summary  : No detailed summary available
@@ -258,7 +258,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656292425
+export SOURCE_DATE_EPOCH=1656301469
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -339,18 +339,18 @@ popd
 
 echo "START REBUILD libstdc++"
 
-pushd ../gcc-build-static/x86_64-pc-linux-gnu/libstdc++-v3/
-sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
-sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
-popd
-pushd ../gcc-build-static/x86_64-pc-linux-gnu/32/libstdc++-v3/
-sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
-sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
-popd
+# pushd ../gcc-build-static/x86_64-pc-linux-gnu/libstdc++-v3/
+# sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
+# sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
+# sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
+# sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
+# popd
+# pushd ../gcc-build-static/x86_64-pc-linux-gnu/32/libstdc++-v3/
+# sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
+# sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
+# sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
+# sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
+# popd
 
 # Work around libstdc++'s use of weak symbols to libpthread in static
 # mode: libpthread doesn't get pulled in and therefore we get crashes
@@ -386,7 +386,7 @@ echo "END REBUILD libstdc++"
 
 
 %install
-export SOURCE_DATE_EPOCH=1656292425
+export SOURCE_DATE_EPOCH=1656301469
 rm -rf %{buildroot}
 ## altflags1f content
 ## altflags1
