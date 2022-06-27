@@ -12,6 +12,7 @@ Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0-with-GCC-exception GPL-3.0+ GPL-3.0-with-GCC-exception LGPL-2.0+
 Requires: gcc-data = %{version}-%{release}
+Requires: gcc-lib = %{version}-%{release}
 Requires: gcc-libgcc32 = %{version}-%{release}
 Requires: gcc-libs-math = %{version}-%{release}
 Requires: gcc-libstdc++32 = %{version}-%{release}
@@ -125,6 +126,7 @@ data components for the gcc package.
 %package dev
 Summary: dev components for the gcc package.
 Group: Development
+Requires: gcc-lib = %{version}-%{release}
 Requires: gcc-data = %{version}-%{release}
 Provides: gcc-devel = %{version}-%{release}
 Requires: gcc = %{version}-%{release}
@@ -151,6 +153,15 @@ Requires: gcc-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the gcc package.
+
+
+%package lib
+Summary: lib components for the gcc package.
+Group: Libraries
+Requires: gcc-data = %{version}-%{release}
+
+%description lib
+lib components for the gcc package.
 
 
 %package libgcc32
@@ -247,7 +258,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656286925
+export SOURCE_DATE_EPOCH=1656292425
 ## altflags1f content
 ## altflags1
 unset ASFLAGS
@@ -332,13 +343,13 @@ pushd ../gcc-build-static/x86_64-pc-linux-gnu/libstdc++-v3/
 sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
 sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
 sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC" $(fd -uu --glob Makefile)
+sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
 popd
 pushd ../gcc-build-static/x86_64-pc-linux-gnu/32/libstdc++-v3/
 sd "\-fPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
 sd "\-fpic" -- "-fno-pic" $(fd -uu --glob Makefile)
 sd "\-DPIC" -- "-fno-PIC" $(fd -uu --glob Makefile)
-sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC" $(fd -uu --glob Makefile)
+sd "\-D_GLIBCXX_SHARED" -- "-D_GLIBCXX_SHARED -DPIC -fPIC -DGTHREAD_USE_WEAK=0 -D_GLIBCXX_GTHREAD_USE_WEAK=0" $(fd -uu --glob Makefile)
 popd
 
 # Work around libstdc++'s use of weak symbols to libpthread in static
@@ -375,7 +386,7 @@ echo "END REBUILD libstdc++"
 
 
 %install
-export SOURCE_DATE_EPOCH=1656286925
+export SOURCE_DATE_EPOCH=1656292425
 rm -rf %{buildroot}
 ## altflags1f content
 ## altflags1
@@ -486,6 +497,19 @@ popd
 (cd %{buildroot}/usr/lib64 && ln -s -t . gcc/x86_64-pc-linux-gnu/*/*.[ao])
 (cd %{buildroot}/usr/lib32 && ln -s -t . ../lib64/gcc/x86_64-pc-linux-gnu/*/32/*.[ao])
 ## install_macro end
+## install_append content
+install -dm 0755 %{buildroot}/usr/lib64/haswell/
+pushd %{buildroot}/usr/lib64/haswell/
+for lib in ../lib*.so*; do
+    ln -sf $lib %{buildroot}/usr/lib64/haswell/;
+done
+popd
+if [[ -d "%{buildroot}/usr/lib64/haswell" ]]; then
+    if [[ ! "$(ls -A %{buildroot}/usr/lib64/haswell/)" ]]; then
+        rm -rf %{buildroot}/usr/lib64/haswell/
+    fi
+fi
+## install_append end
 ## custom find_lang start
 %find_lang cpplib
 %find_lang gcc
@@ -2033,6 +2057,13 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/include/xcoffout.h
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcc1plugin.la
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/plugin/libcp1plugin.la
+/usr/lib64/haswell/libasan.so
+/usr/lib64/haswell/libcc1.so
+/usr/lib64/haswell/libgcc_s.so
+/usr/lib64/haswell/liblsan.so
+/usr/lib64/haswell/libstdc++.so
+/usr/lib64/haswell/libtsan.so
+/usr/lib64/haswell/libubsan.so
 /usr/lib64/libatomic.la
 /usr/lib64/libatomic.so
 /usr/lib64/libgcc_s.so
@@ -2120,6 +2151,20 @@ rm tmp.lang
 /usr/lib64/gcc/x86_64-pc-linux-gnu/12/32/libgcov.a
 /usr/share/gdb/auto-load/usr/lib32/libstdc++.so.6.0.30-gdb.py
 
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/haswell/libasan.so.8
+/usr/lib64/haswell/libasan.so.8.0.0
+/usr/lib64/haswell/libcc1.so.0
+/usr/lib64/haswell/libcc1.so.0.0.0
+/usr/lib64/haswell/libgcc_s.so.1
+/usr/lib64/haswell/liblsan.so.0
+/usr/lib64/haswell/liblsan.so.0.0.0
+/usr/lib64/haswell/libtsan.so.2
+/usr/lib64/haswell/libtsan.so.2.0.0
+/usr/lib64/haswell/libubsan.so.1
+/usr/lib64/haswell/libubsan.so.1.0.0
+
 %files libgcc32
 %defattr(-,root,root,-)
 /usr/lib32/libasan.so.8
@@ -2145,6 +2190,24 @@ rm tmp.lang
 
 %files libs-math
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libatomic.so
+/usr/lib64/haswell/libatomic.so.1
+/usr/lib64/haswell/libatomic.so.1.2.0
+/usr/lib64/haswell/libgfortran.so
+/usr/lib64/haswell/libgfortran.so.5
+/usr/lib64/haswell/libgfortran.so.5.0.0
+/usr/lib64/haswell/libgomp.so
+/usr/lib64/haswell/libgomp.so.1
+/usr/lib64/haswell/libgomp.so.1.0.0
+/usr/lib64/haswell/libitm.so
+/usr/lib64/haswell/libitm.so.1
+/usr/lib64/haswell/libitm.so.1.0.0
+/usr/lib64/haswell/libquadmath.so
+/usr/lib64/haswell/libquadmath.so.0
+/usr/lib64/haswell/libquadmath.so.0.0.0
+/usr/lib64/haswell/libssp.so
+/usr/lib64/haswell/libssp.so.0
+/usr/lib64/haswell/libssp.so.0.0.0
 /usr/lib64/libatomic.so.1
 /usr/lib64/libatomic.so.1.2.0
 /usr/lib64/libgfortran.so.5
@@ -2219,6 +2282,8 @@ rm tmp.lang
 
 %files -n libstdc++
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libstdc++.so.6
+/usr/lib64/haswell/libstdc++.so.6.0.30
 /usr/lib64/libstdc++.so.6
 /usr/lib64/libstdc++.so.6.0.30
 
